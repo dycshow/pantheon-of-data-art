@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>万象归序 | DYCSHOW 数据可视化艺术殿堂</title>
+  <meta name="description" content="DYCSHOW 个人策展的数据可视化艺术殿堂——以严密几何与东方秩序美学，将生活与工作的繁杂无序淬炼为看得见的结构与真相。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <script type="module" crossorigin src="./assets/index-CjEMVuSw.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index--JgZzZo1.css">
+</head>
+<body>
+  <!-- Museum Top Navigation Rail -->
+  <header class="museum-header" id="museum-header">
+    <div class="header-left">
+      <span class="catalog-badge" data-i18n="catalogBadge">DYCSHOW · 馆藏编号 001</span>
+      <a href="#atrium" class="brand-title" data-i18n="brandTitle">万象归序 · 数据可视化艺术殿堂</a>
+    </div>
+
+    <nav class="hall-nav" aria-label="Exhibition Halls">
+      <a href="#hall-chronos" class="nav-link"><span class="nav-idx" data-nav-idx="1">壹</span> <span data-i18n="navChronos">岁月年轮</span></a>
+      <a href="#hall-flux" class="nav-link"><span class="nav-idx" data-nav-idx="2">贰</span> <span data-i18n="navFlux">价值河床</span></a>
+      <a href="#hall-constellation" class="nav-link"><span class="nav-idx" data-nav-idx="3">叁</span> <span data-i18n="navConstellation">万物星图</span></a>
+      <a href="#hall-prism" class="nav-link"><span class="nav-idx" data-nav-idx="4">肆</span> <span data-i18n="navPrism">真相棱镜</span></a>
+      <a href="#hall-sanctuary" class="nav-link"><span class="nav-idx" data-nav-idx="5">伍</span> <span data-i18n="navSanctuary">秩序信仰</span></a>
+    </nav>
+
+    <div class="header-right">
+      <div class="lang-switch" role="group" aria-label="Language Switch">
+        <button type="button" id="lang-zh-btn" class="lang-btn active" data-lang="zh">中文</button>
+        <button type="button" id="lang-en-btn" class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <button type="button" id="global-entropy-btn" class="global-toggle-btn">
+        <span class="pulse-dot"></span>
+        <span id="global-mode-label">全局秩序态 · 万象归序</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO ATRIUM -->
+    <section id="atrium" class="hero-atrium">
+      <canvas id="hero-canvas" class="hero-canvas"></canvas>
+      <div class="hero-vignette"></div>
+
+      <div class="hero-content">
+        <div class="hero-meta-row">
+          <span class="mono-tag" data-i18n="heroMetaLeft">个人策展 · DYCSHOW</span>
+          <span class="hairline-divider"></span>
+          <span class="mono-tag" data-i18n="heroMetaRight">数据可视化秩序美学</span>
+        </div>
+
+        <h1 class="hero-title">
+          <span class="title-primary" data-i18n="heroTitleMain">万象归序</span>
+          <span class="title-secondary" data-i18n="heroTitleSub">数据可视化的艺术殿堂</span>
+        </h1>
+
+        <p class="hero-subtitle" data-i18n="heroSubtitle">
+          在 AI 三秒即可生成海量图表的时代，人类最稀缺的不再是工具，而是“看见结构与秩序”的审美与洞察。这是一座致力于将生活与工作的繁杂无序，雕刻为直抵人心之视觉表达的艺术殿堂。
+        </p>
+
+        <div class="hero-controls">
+          <div class="morph-pill-group" role="group" aria-label="Atrium Particle Geometry">
+            <button type="button" class="morph-btn" data-shape="chaos" data-i18n="shapeChaos">壹 · 混沌星云</button>
+            <button type="button" class="morph-btn active" data-shape="astrolabe" data-i18n="shapeAstrolabe">贰 · 天体星盘</button>
+            <button type="button" class="morph-btn" data-shape="phyllotaxis" data-i18n="shapePhyllotaxis">叁 · 斐波那契螺旋</button>
+            <button type="button" class="morph-btn" data-shape="harmonic" data-i18n="shapeHarmonic">肆 · 谐振波矩阵</button>
+          </div>
+          <div id="hero-entropy-val" class="hero-readout">当前形态：贰 · 天体星盘（同心秩序）</div>
+        </div>
+
+        <div class="hero-footer-strip">
+          <div class="stat-plaque">
+            <span class="stat-num" data-i18n="stat1Num">肆座</span>
+            <span class="stat-label"><span data-i18n="stat1Label">沉浸式交互展厅</span><br /><small data-i18n="stat1Sub">从混沌推演至秩序</small></span>
+          </div>
+          <div class="stat-plaque">
+            <span class="stat-num" data-i18n="stat2Num">叁条</span>
+            <span class="stat-label"><span data-i18n="stat2Label">视觉秩序核心定律</span><br /><small data-i18n="stat2Sub">反平庸与人文尺度</small></span>
+          </div>
+          <div class="stat-plaque">
+            <span class="stat-num" data-i18n="stat3Num">肆幅</span>
+            <span class="stat-label"><span data-i18n="stat3Label">馆藏级秩序版画</span><br /><small data-i18n="stat3Sub">黑曜石与金箔美学</small></span>
+          </div>
+          <a href="#hall-chronos" class="enter-museum-btn" data-i18n="enterMuseum">步入第一展厅 ↓</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CURATORIAL PROLOGUE -->
+    <section class="prologue-band">
+      <div class="container prologue-grid">
+        <div class="prologue-left">
+          <span class="mono-tag" data-i18n="prologueTag">策展人手记</span>
+          <h2 id="prologue-heading" data-i18n="prologueHeading">为什么我们要建造一座<br />“数据可视化的艺术殿堂”？</h2>
+          <p class="curator-signature" data-i18n="prologueSig">—— DYCSHOW · 策展手记</p>
+        </div>
+        <div class="prologue-right">
+          <p data-i18n-html="prologueP1">
+            市面上绝大多数数据表达都止步于“把表格变成千篇一律的柱状图和饼图”。然而真实的生活与工作从来不是整齐的电子表格——它是<strong>被碎片打断的三百六十五天、不知去向的时间与资本、盘根错节的系统因果，以及被“平均值”掩盖的个体代价</strong>。
+          </p>
+          <p data-i18n-html="prologueP2">
+            我试图借助严谨的几何引擎与艺术美学，把那些原本无形、混沌、令人焦虑的现实命题，雕刻成一眼可感、直击本质的视觉圣殿。每一座展厅都允许你亲手从<strong>“混沌原貌”</strong>推演至<strong>“万象归序”</strong>，亲眼见证秩序诞生那一刻的震撼。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HALL I: CHRONOS ASTROLABE -->
+    <section id="hall-chronos" class="exhibit-hall">
+      <div class="container">
+        <div class="hall-header">
+          <div class="hall-eyebrow">
+            <span class="mono-tag" data-i18n="hall1Tag">第一展厅 · 第一馆藏版画</span>
+            <span class="tech-tag" data-i18n="hall1Tech">命题一 · 时间秩序与心流节律</span>
+          </div>
+          <h2 class="hall-title" data-i18n="hall1Title">岁月的年轮</h2>
+          <p class="hall-lead" data-i18n="hall1Lead">
+            生活痛点：一年三百六十五天、八千七百六十个小时，在日程表与待办清单里显得支离破碎。当“即时打断”与“深度创造”在径向星盘上同时显影，你将首次看见自己生命注意力的真实纹理。
+          </p>
+        </div>
+
+        <div class="exhibit-stage">
+          <div class="canvas-viewport tall-stage">
+            <canvas id="chronos-canvas"></canvas>
+            <div class="stage-overlay-top">
+              <div class="state-toggle" data-exhibit="chronos">
+                <button type="button" class="state-btn" data-state="chaos" data-i18n="btnChaos">混沌原貌</button>
+                <button type="button" class="state-btn active" data-state="order" data-i18n="btnOrder">万象归序</button>
+              </div>
+              <div class="filter-pills" id="chronos-filters">
+                <button type="button" class="pill-btn active" data-filter="all" data-i18n="filterAll">全部维度</button>
+                <button type="button" class="pill-btn" data-filter="deep"><i class="dot gold"></i> <span data-i18n="filterDeep">深度创造</span></button>
+                <button type="button" class="pill-btn" data-filter="ai"><i class="dot teal"></i> <span data-i18n="filterAi">AI 协同杠杆</span></button>
+                <button type="button" class="pill-btn" data-filter="frag"><i class="dot vermilion"></i> <span data-i18n="filterFrag">碎片打断</span></button>
+                <button type="button" class="pill-btn" data-filter="rest"><i class="dot slate"></i> <span data-i18n="filterRest">身心修复</span></button>
+              </div>
+            </div>
+            <div class="inspector-hud" id="chronos-hud">
+              <div class="hud-label" data-i18n="chronosHudLabel">悬停星盘任意一日读取时间轨迹</div>
+              <div class="hud-metrics" id="chronos-metrics">全年三百六十五天轨迹已归序：黄金弧线串联连续专注周期，赤红尖刺显影碎片打断源</div>
+            </div>
+          </div>
+
+          <aside class="curatorial-plaque">
+            <div class="plaque-art-frame" data-plate="plate1" data-plate-src="./assets/plates/plate-1-chronos.png">
+              <div class="protected-img-box">
+                <img src="./assets/plates/plate-1-chronos.png" alt="Plate I: Chronos Astrolabe" loading="lazy" draggable="false" />
+                <div class="watermark-shield" aria-hidden="true"></div>
+                <span class="curator-seal-badge" data-i18n="sealText">© DYCSHOW 馆藏原件</span>
+              </div>
+              <div class="art-caption">
+                <span data-i18n="plate1Label">馆藏版画壹 · 原创数字印记</span>
+                <button type="button" class="zoom-art-btn" data-plate="plate1" data-plate-src="./assets/plates/plate-1-chronos.png" data-i18n="zoomBtn">放大鉴赏 ⤢</button>
+              </div>
+            </div>
+            <div class="plaque-notes">
+              <h3 data-i18n="chronosNotesTitle">策展解码 · 为什么不用传统日历？</h3>
+              <p data-i18n-html="chronosNotesBody">线性日历把一年切成十二个割裂的方块，掩盖了季节韵律与习惯连击。<strong>极坐标年轮叠加跨日心流弧线</strong>，能在一眼之间让周期性的生命节律完整显形。</p>
+              <div class="recipe-box">
+                <span class="mono-tag" data-i18n="insightLabel">策展洞察</span>
+                <span data-i18n="chronosInsight">时间并非线性消耗品，而是呈脉冲式共振的年轮；识别连续心流弧线，远比填满日程表更重要。（底层几何：极坐标比例尺叠加弹簧粒子物理）</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- HALL II: THE LOOM OF VALUE -->
+    <section id="hall-flux" class="exhibit-hall alt-surface">
+      <div class="container">
+        <div class="hall-header">
+          <div class="hall-eyebrow">
+            <span class="mono-tag" data-i18n="hall2Tag">第二展厅 · 第二馆藏版画</span>
+            <span class="tech-tag" data-i18n="hall2Tech">命题二 · 能量守恒与认知复利</span>
+          </div>
+          <h2 class="hall-title" data-i18n="hall2Title">价值的河床</h2>
+          <p class="hall-lead" data-i18n="hall2Lead">
+            工作与财务痛点：账本和工时表只记录“单笔数字”，却看不见资源从哪里悄悄漏走、又在哪里产生复利。点击“开启认知觉醒干预”，观察隐形耗散如何重新汇聚为长期护城河。
+          </p>
+        </div>
+
+        <div class="exhibit-stage reverse-layout">
+          <aside class="curatorial-plaque">
+            <div class="plaque-art-frame" data-plate="plate2" data-plate-src="./assets/plates/plate-2-flux.png">
+              <div class="protected-img-box">
+                <img src="./assets/plates/plate-2-flux.png" alt="Plate II: The Loom of Value" loading="lazy" draggable="false" />
+                <div class="watermark-shield" aria-hidden="true"></div>
+                <span class="curator-seal-badge" data-i18n="sealText">© DYCSHOW 馆藏原件</span>
+              </div>
+              <div class="art-caption">
+                <span data-i18n="plate2Label">馆藏版画贰 · 原创数字印记</span>
+                <button type="button" class="zoom-art-btn" data-plate="plate2" data-plate-src="./assets/plates/plate-2-flux.png" data-i18n="zoomBtn">放大鉴赏 ⤢</button>
+              </div>
+            </div>
+            <div class="plaque-notes">
+              <h3 data-i18n="fluxNotesTitle">策展解码 · 从孤立数字到“因果流向”</h3>
+              <p data-i18n-html="fluxNotesBody">三个孤立的饼图永远无法解释“为什么越忙越焦虑”。<strong>多阶段冲积织锦</strong>强制守恒总量：每一束出发的精力与资本，都必须在右侧交代最终归宿。</p>
+              <div class="recipe-box">
+                <span class="mono-tag" data-i18n="insightLabel">策展洞察</span>
+                <span data-i18n="fluxInsight">真正决定人生长期走势的，不是峰值产出，而是中间管道里有多少比例悄然流入了“情绪内耗”与“隐形漏损”。（底层几何：三次贝塞尔守恒流场）</span>
+              </div>
+            </div>
+          </aside>
+
+          <div class="canvas-viewport tall-stage">
+            <canvas id="flux-canvas"></canvas>
+            <div class="stage-overlay-top">
+              <div class="state-toggle" data-exhibit="flux">
+                <button type="button" class="state-btn" data-state="chaos" data-i18n="btnChaos">混沌原貌</button>
+                <button type="button" class="state-btn active" data-state="order" data-i18n="btnOrder">万象归序</button>
+              </div>
+              <button type="button" id="flux-intervention-btn" class="intervention-btn" data-i18n="interventionOff">✦ 开启认知觉醒干预 · 系统重构</button>
+            </div>
+            <div class="inspector-hud" id="flux-hud">
+              <div class="hud-label" data-i18n="fluxHudLabel">悬停任意河道节点追溯上下游流量</div>
+              <div class="hud-metrics" id="flux-metrics">基准现实流向：点击右上角「开启认知觉醒干预」，观察隐形漏损如何重构为长期复利</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HALL III: CONSTELLATION OF ORDER -->
+    <section id="hall-constellation" class="exhibit-hall">
+      <div class="container">
+        <div class="hall-header">
+          <div class="hall-eyebrow">
+            <span class="mono-tag" data-i18n="hall3Tag">第三展厅 · 第三馆藏版画</span>
+            <span class="tech-tag" data-i18n="hall3Tech">命题三 · 万物耦合与系统解构</span>
+          </div>
+          <h2 class="hall-title" data-i18n="hall3Title">万物的星图</h2>
+          <p class="hall-lead" data-i18n="hall3Lead">
+            系统认知痛点：当现实难题与开源表达工具各自散落成孤岛，复杂的关联往往退化为不可读的“毛线球”。这幅三百六十度边捆绑星盘，让繁复的跨界因果以星群拓扑清晰显现。
+          </p>
+        </div>
+
+        <div class="exhibit-stage">
+          <div class="canvas-viewport constellation-stage">
+            <div id="constellation-svg-host" class="svg-host"></div>
+            <div class="stage-overlay-top">
+              <div class="state-toggle" data-exhibit="constellation">
+                <button type="button" class="state-btn" data-state="chaos" data-i18n="btnChaos">混沌原貌</button>
+                <button type="button" class="state-btn active" data-state="order" data-i18n="btnOrder">万象归序</button>
+              </div>
+              <span class="mono-hint" data-i18n="constellationHint">点击或悬停星盘外环节点，解锁对应现实难题与视觉解法</span>
+            </div>
+          </div>
+
+          <aside class="curatorial-plaque">
+            <div class="scenario-inspector-card" id="constellation-inspector">
+              <div class="inspector-badge" data-i18n="inspectorBadge">现实命题交互解码器 · 点击星盘节点切换</div>
+              <h3 id="ci-title">个人十年时间账单</h3>
+              <div class="ci-meta" id="ci-meta"></div>
+              <p class="ci-pain" id="ci-pain"></p>
+              <p class="ci-solution" id="ci-solution"></p>
+              <div class="ci-antipattern" id="ci-anti"></div>
+            </div>
+
+            <div class="plaque-art-frame compact" data-plate="plate3" data-plate-src="./assets/plates/plate-3-constellation.png">
+              <div class="protected-img-box">
+                <img src="./assets/plates/plate-3-constellation.png" alt="Plate III: Constellation of Order" loading="lazy" draggable="false" />
+                <div class="watermark-shield" aria-hidden="true"></div>
+                <span class="curator-seal-badge" data-i18n="sealText">© DYCSHOW 馆藏原件</span>
+              </div>
+              <div class="art-caption">
+                <span data-i18n="plate3Label">馆藏版画叁 · 原创数字印记</span>
+                <button type="button" class="zoom-art-btn" data-plate="plate3" data-plate-src="./assets/plates/plate-3-constellation.png" data-i18n="zoomBtn">放大鉴赏 ⤢</button>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- HALL IV: THE PRISM OF TRUTH -->
+    <section id="hall-prism" class="exhibit-hall alt-surface">
+      <div class="container">
+        <div class="hall-header">
+          <div class="hall-eyebrow">
+            <span class="mono-tag" data-i18n="hall4Tag">第四展厅 · 第四馆藏版画</span>
+            <span class="tech-tag" data-i18n="hall4Tech">命题四 · 均值幻象与个体尊严</span>
+          </div>
+          <h2 class="hall-title" data-i18n="hall4Title">真相的棱镜</h2>
+          <p class="hall-lead" data-i18n="hall4Lead">
+            AI 时代的认知必修课：用同一份 120 位探索者的真实决策数据，在五种截然不同的视觉形态间实时变形——看 AI 生成的“平均值”如何掩盖真实撕裂，又看“五维人文繁花”如何还原生命的完整立体。
+          </p>
+        </div>
+
+        <div class="exhibit-stage reverse-layout">
+          <aside class="curatorial-plaque">
+            <div class="plaque-art-frame" data-plate="plate4" data-plate-src="./assets/plates/plate-4-prism.png">
+              <div class="protected-img-box">
+                <img src="./assets/plates/plate-4-prism.png" alt="Plate IV: The Prism of Truth" loading="lazy" draggable="false" />
+                <div class="watermark-shield" aria-hidden="true"></div>
+                <span class="curator-seal-badge" data-i18n="sealText">© DYCSHOW 馆藏原件</span>
+              </div>
+              <div class="art-caption">
+                <span data-i18n="plate4Label">馆藏版画肆 · 原创数字印记</span>
+                <button type="button" class="zoom-art-btn" data-plate="plate4" data-plate-src="./assets/plates/plate-4-prism.png" data-i18n="zoomBtn">放大鉴赏 ⤢</button>
+              </div>
+            </div>
+            <div class="plaque-notes" id="prism-essay">
+              <h3 id="prism-stage-title">视角丁 · 数据人文繁花</h3>
+              <p id="prism-stage-desc"></p>
+              <div class="recipe-box">
+                <span class="mono-tag" data-i18n="insightLabel">策展洞察</span>
+                <span id="prism-lesson"></span>
+              </div>
+            </div>
+          </aside>
+
+          <div class="canvas-viewport tall-stage">
+            <div id="prism-svg-host" class="svg-host"></div>
+            <div class="stage-overlay-top">
+              <div class="morph-pill-group compact" id="prism-modes">
+                <button type="button" class="prism-btn" data-mode="chaos" data-i18n="prismMode0">零 · 混沌原始点</button>
+                <button type="button" class="prism-btn" data-mode="bar" data-i18n="prismModeA">甲 · 平均值的谎言</button>
+                <button type="button" class="prism-btn" data-mode="beeswarm" data-i18n="prismModeB">乙 · 个体蜂群分布</button>
+                <button type="button" class="prism-btn" data-mode="scatter" data-i18n="prismModeC">丙 · 自由与焦虑前沿</button>
+                <button type="button" class="prism-btn active" data-mode="glyphs" data-i18n="prismModeD">丁 · 数据人文繁花</button>
+              </div>
+            </div>
+            <div class="inspector-hud" id="prism-hud">
+              <div class="hud-label" data-i18n="prismHudLabel">悬停任意点位或花朵读取五维人生编码</div>
+              <div class="hud-metrics" id="prism-metrics">当前视窗：120 个真实决策样本正在以五维几何形态并置呈现</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HALL V: THE CURATOR'S SANCTUARY & ARCHIVAL PLATES -->
+    <section id="hall-sanctuary" class="exhibit-hall sanctuary-hall">
+      <div class="container">
+        <div class="hall-header centered">
+          <div class="hall-eyebrow">
+            <span class="mono-tag" data-i18n="hall5Tag">第五展厅 · 策展哲思与馆藏版画</span>
+          </div>
+          <h2 class="hall-title" data-i18n="hall5Title">秩序的信仰</h2>
+          <p class="hall-lead centered-lead" data-i18n="hall5Lead">
+            技术只是画笔，对现实秩序的洞察与审美才是灵魂。这里沉淀了本殿堂的四幅核心视觉圣像，以及我们对数据可视化艺术的三条核心信仰。
+          </p>
+        </div>
+
+        <div class="gallery-quad">
+          <article class="gallery-card">
+            <div class="gallery-img-wrap" data-plate="plate1" data-plate-src="./assets/plates/plate-1-chronos.png">
+              <img src="./assets/plates/plate-1-chronos.png" alt="Plate I Chronos Astrolabe" loading="lazy" draggable="false" />
+              <div class="watermark-shield" aria-hidden="true"></div>
+              <span class="curator-seal-badge small" data-i18n="sealText">© DYCSHOW 馆藏原件</span>
+              <button type="button" class="zoom-art-btn floating" data-plate="plate1" data-plate-src="./assets/plates/plate-1-chronos.png" data-i18n="zoomBtn">放大鉴赏 ⤢</button>
+            </div>
+            <div class="gallery-meta">
+              <span class="mono-tag" data-i18n="plate1CardTag">版画壹 · 岁时秩序</span>
+              <h4 data-i18n="plate1CardTitle">岁月的年轮</h4>
+              <p data-i18n="plate1CardDesc">碎纸与尘埃在暗夜中坍缩凝聚为黄铜与金箔星盘，象征时间秩序的诞生。</p>
+            </div>
+          </article>
+
+          <article class="gallery-card">
+            <div class="gallery-img-wrap" data-plate="plate2" data-plate-src="./assets/plates/plate-2-flux.png">
+              <img src="./assets/plates/plate-2-flux.png" alt="Plate II The Loom of Value" loading="lazy" draggable="false" />
+              <div class="watermark-shield" aria-hidden="true"></div>
+              <span class="curator-seal-badge small" data-i18n="sealText">© DYCSHOW 馆藏原件</span>
+              <button type="button" class="zoom-art-btn floating" data-plate="plate2" data-plate-src="./assets/plates/plate-2-flux.png" data-i18n="zoomBtn">放大鉴赏 ⤢</button>
+            </div>
+            <div class="gallery-meta">
+              <span class="mono-tag" data-i18n="plate2CardTag">版画贰 · 能量守恒</span>
+              <h4 data-i18n="plate2CardTitle">价值的河床</h4>
+              <p data-i18n="plate2CardDesc">金箔、朱砂与铜绿丝线从死结中被梳理成恢弘流动的守恒织锦。</p>
+            </div>
+          </article>
+
+          <article class="gallery-card">
+            <div class="gallery-img-wrap" data-plate="plate3" data-plate-src="./assets/plates/plate-3-constellation.png">
+              <img src="./assets/plates/plate-3-constellation.png" alt="Plate III Constellation of Order" loading="lazy" draggable="false" />
+              <div class="watermark-shield" aria-hidden="true"></div>
+              <span class="curator-seal-badge small" data-i18n="sealText">© DYCSHOW 馆藏原件</span>
+              <button type="button" class="zoom-art-btn floating" data-plate="plate3" data-plate-src="./assets/plates/plate-3-constellation.png" data-i18n="zoomBtn">放大鉴赏 ⤢</button>
+            </div>
+            <div class="gallery-meta">
+              <span class="mono-tag" data-i18n="plate3CardTag">版画叁 · 系统拓扑</span>
+              <h4 data-i18n="plate3CardTitle">万物的星图</h4>
+              <p data-i18n="plate3CardDesc">杂乱的思维触须连接成高维天体网络与透明几何晶体，显现因果拓扑。</p>
+            </div>
+          </article>
+
+          <article class="gallery-card">
+            <div class="gallery-img-wrap" data-plate="plate4" data-plate-src="./assets/plates/plate-4-prism.png">
+              <img src="./assets/plates/plate-4-prism.png" alt="Plate IV The Prism of Truth" loading="lazy" draggable="false" />
+              <div class="watermark-shield" aria-hidden="true"></div>
+              <span class="curator-seal-badge small" data-i18n="sealText">© DYCSHOW 馆藏原件</span>
+              <button type="button" class="zoom-art-btn floating" data-plate="plate4" data-plate-src="./assets/plates/plate-4-prism.png" data-i18n="zoomBtn">放大鉴赏 ⤢</button>
+            </div>
+            <div class="gallery-meta">
+              <span class="mono-tag" data-i18n="plate4CardTag">版画肆 · 认知折射</span>
+              <h4 data-i18n="plate4CardTitle">真相的棱镜</h4>
+              <p data-i18n="plate4CardDesc">原始数据噪音穿过水晶棱镜，折射出纯净的谐振波纹与数据人文繁花。</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="sanctuary-footer-grid">
+          <div class="blueprint-panel">
+            <span class="mono-tag" data-i18n="lawsTag">DYCSHOW · 视觉秩序三定律</span>
+            <h3 data-i18n="lawsTitle">数据可视化艺术的三条核心定律</h3>
+            <p data-i18n="lawsIntro">把复杂的世界画得简单很容易，难的是在保留敬畏与真实的前提下，让秩序自己浮现：</p>
+            <ul>
+              <li data-i18n-html="law1"><strong>反平庸定律</strong>：真正的殿堂不复制后台模板，每一种现实复杂度都值得拥有专属的几何语言。</li>
+              <li data-i18n-html="law2"><strong>秩序守恒定律</strong>：可视化不是把数字装饰得好看，而是强迫散乱的时间、资本与因果显出守恒的流向。</li>
+              <li data-i18n-html="law3"><strong>人文尺度定律</strong>：拒绝被冰冷的“平均值”抹平个体差异，用几何繁花保存生命本身的复杂质地。</li>
+            </ul>
+          </div>
+
+          <div class="blueprint-panel">
+            <span class="mono-tag" data-i18n="brandTag">策展人品牌与开源档案馆</span>
+            <h3 data-i18n="brandPanelTitle">DYCSHOW 视觉实验室 · 持续策展与共建</h3>
+            <p data-i18n="brandIntro">《万象归序》是我个人长期维护的数据可视化艺术实验场。项目源代码与开源可视化策展图谱均已公开，欢迎每一位追求极致视觉表达的探索者共同扩展更多生活与工作命题：</p>
+            <ul>
+              <li data-i18n-html="brandLi1"><strong>在线交互殿堂</strong>：随时在浏览器中亲手推演「混沌坍缩为秩序」的动态视觉实验。</li>
+              <li data-i18n-html="brandLi2"><strong>开源方法论附录</strong>：系统整理了世界经典数据可视化理论与主流开源几何引擎的选型边界。</li>
+            </ul>
+            <div class="action-links">
+              <a href="https://github.com/dycshow/pantheon-of-data-art" target="_blank" rel="noopener noreferrer" class="primary-link-btn" data-i18n="linkGithub">访问代码仓库 ↗</a>
+              <a href="https://github.com/dycshow" target="_blank" rel="noopener noreferrer" class="secondary-link-btn" data-i18n="linkProfile">DYCSHOW 个人主页 ↗</a>
+              <a id="atlas-doc-link" href="https://github.com/dycshow/pantheon-of-data-art/blob/main/docs/OPEN_SOURCE_ATLAS.md" target="_blank" rel="noopener noreferrer" class="secondary-link-btn" data-i18n="linkAtlas">阅读中文技术图谱 ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="museum-footer">
+    <div class="container footer-inner">
+      <div data-i18n-html="footerLeft">
+        <strong>DYCSHOW 个人策展与设计</strong> · 万象归序：数据可视化艺术殿堂
+      </div>
+      <div class="mono-tag" data-i18n="footerRight">原创视觉与代码版权归属 DYCSHOW · 献给 AI 时代的人类视觉素养</div>
+    </div>
+  </footer>
+
+  <!-- Fullscreen Protected Artwork Lightbox -->
+  <div id="art-lightbox" class="art-lightbox" aria-hidden="true">
+    <div class="lightbox-backdrop"></div>
+    <button type="button" id="close-lightbox" class="close-lightbox" aria-label="Close">✕</button>
+    <div class="lightbox-inner">
+      <div class="lightbox-img-frame">
+        <img id="lightbox-img" src="" alt="" draggable="false" />
+        <div class="watermark-shield" aria-hidden="true"></div>
+        <span class="curator-seal-badge" data-i18n="sealText">© DYCSHOW 馆藏原件</span>
+      </div>
+      <p id="lightbox-caption" class="lightbox-caption"></p>
+    </div>
+  </div>
+
+  <!-- Museum Provenance Protection Toast -->
+  <div id="provenance-toast" class="provenance-toast" role="status" aria-live="polite"></div>
+
+</body>
+</html>
