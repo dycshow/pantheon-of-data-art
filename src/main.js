@@ -16,6 +16,24 @@ function bootstrap() {
   let globalIsOrder = true;
   let toastTimer = null;
 
+  // Curatorial Audio Guide State (paired with MiMo TTS acoustic tracks)
+  const AUDIO_TRACKS = [
+    { id: '00-prologue', titleKey: 'audioTitle00', sectionId: 'atrium' },
+    { id: '01-chronos', titleKey: 'audioTitle01', sectionId: 'hall-chronos' },
+    { id: '02-flux', titleKey: 'audioTitle02', sectionId: 'hall-flux' },
+    { id: '03-constellation', titleKey: 'audioTitle03', sectionId: 'hall-constellation' },
+    { id: '04-prism', titleKey: 'audioTitle04', sectionId: 'hall-prism' },
+    { id: '05-sanctuary', titleKey: 'audioTitle05', sectionId: 'hall-sanctuary' },
+  ];
+  const guideAudio = new Audio();
+  guideAudio.id = 'curatorial-audio-player';
+  guideAudio.preload = 'metadata';
+  document.getElementById('audio-guide-dock')?.appendChild(guideAudio);
+
+  let activeTrackIdx = -1;
+  let autoTourEnabled = true;
+  let dockDismissed = false;
+
   const exhibits = {
     hero: null,
     chronos: null,
@@ -34,6 +52,160 @@ function bootstrap() {
       toast.classList.remove('visible');
     }, 3200);
   }
+
+  function formatAudioTime(seconds) {
+    if (!Number.isFinite(seconds) || seconds < 0) return '00:00';
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  }
+
+  function getAudioSrc(trackId, lang) {
+    const base = import.meta.env.BASE_URL || '/';
+    return `${base}assets/audio/${trackId}-${lang}.mp3`;
+  }
+
+  function syncAudioUI() {
+    const dict = I18N[currentLang];
+    const hasTrack = activeTrackIdx >= 0 && activeTrackIdx < AUDIO_TRACKS.length;
+    const activeTrack = hasTrack ? AUDIO_TRACKS[activeTrackIdx] : null;
+    const isPlaying = hasTrack && !guideAudio.paused && !guideAudio.ended;
+    const curSec = guideAudio.currentTime || 0;
+    const durSec = Number.isFinite(guideAudio.duration) ? guideAudio.duration : 0;
+    const timeStr = `${formatAudioTime(curSec)} / ${formatAudioTime(durSec)}`;
+
+    const tourBtn = document.getElementById('btn-audio-tour');
+    const tourLabel = document.getElementById('audio-tour-label');
+    if (tourBtn && tourLabel) {
+      tourBtn.classList.toggle('is-playing', isPlaying);
+      tourLabel.textContent = isPlaying ? dict.navAudioTourPlaying : dict.navAudioTour;
+    }
+
+    document.querySelectorAll('.audio-guide-btn').forEach((btn) => {
+      const btnId = btn.dataset.audioId;
+      const isCurrent = Boolean(activeTrack && activeTrack.id === btnId);
+      const isThisPlaying = isCurrent && isPlaying;
+      btn.classList.toggle('is-playing', isThisPlaying);
+      const labelEl = btn.querySelector('.audio-btn-text');
+      const timeEl = btn.querySelector('.audio-btn-time');
+      if (labelEl) {
+        const defaultKey = btn.dataset.labelKey || 'audioListenHall';
+        labelEl.textContent = isThisPlaying ? dict.audioPlayingHall : dict[defaultKey];
+      }
+      if (timeEl) {
+        timeEl.textContent = isCurrent && durSec > 0 ? timeStr : '';
+      }
+    });
+
+    const dock = document.getElementById('audio-guide-dock');
+    if (dock) {
+      const showDock = hasTrack && !dockDismissed;
+      dock.classList.toggle('visible', showDock);
+      dock.setAttribute('aria-hidden', showDock ? 'false' : 'true');
+    }
+
+    const dockEq = document.getElementById('audio-dock-eq');
+    if (dockEq) dockEq.classList.toggle('is-playing', isPlaying);
+
+    const dockTitle = document.getElementById('audio-dock-title');
+    if (dockTitle && activeTrack) {
+      dockTitle.textContent = dict[activeTrack.titleKey] || '';
+    }
+
+    const dockVoice = document.getElementById('audio-dock-voice');
+    if (dockVoice) {
+      dockVoice.textContent = dict.audioVoiceBadge;
+    }
+
+    const dockToggle = document.getElementById('audio-dock-toggle');
+    if (dockToggle) {
+      dockToggle.textContent = isPlaying ? dict.audioBtnPause : dict.audioBtnPlay;
+    }
+
+    const dockPrev = document.getElementById('audio-dock-prev');
+    if (dockPrev) {
+      dockPrev.title = dict.audioPrevTrack;
+      dockPrev.setAttribute('aria-label', dict.audioPrevTrack);
+    }
+
+    const dockNext = document.getElementById('audio-dock-next');
+    if (dockNext) {
+      dockNext.title = dict.audioNextTrack;
+      dockNext.setAttribute('aria-label', dict.audioNextTrack);
+    }
+
+    const dockClose = document.getElementById('audio-dock-close');
+    if (dockClose) {
+      dockClose.title = dict.audioCloseDock;
+      dockClose.setAttribute('aria-label', dict.audioCloseDock);
+    }
+
+    const dockAutoTour = document.getElementById('audio-dock-autotour');
+    if (dockAutoTour) {
+      dockAutoTour.classList.toggle('active', autoTourEnabled);
+      dockAutoTour.textContent = autoTourEnabled ? dict.audioAutoTourOn : dict.audioAutoTourOff;
+    }
+
+    const dockSeek = document.getElementById('audio-dock-seek');
+    if (dockSeek) {
+      dockSeek.max = durSec > 0 ? String(durSec) : '100';
+      dockSeek.value = durSec > 0 ? String(Math.min(curSec, durSec)) : '0';
+    }
+
+    const dockTime = document.getElementById('audio-dock-time');
+    if (dockTime) {
+      dockTime.textContent = timeStr;
+    }
+  }
+
+  function playTrackAt(index, { scroll = false } = {}) {
+    if (index < 0 || index >= AUDIO_TRACKS.length) return;
+    const track = AUDIO_TRACKS[index];
+    dockDismissed = false;
+    activeTrackIdx = index;
+
+    const targetUrl = new URL(getAudioSrc(track.id, currentLang), window.location.href).href;
+    if (guideAudio.src !== targetUrl) {
+      guideAudio.src = targetUrl;
+    }
+    if (scroll) {
+      document.getElementById(track.sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    const playPromise = guideAudio.play();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch((err) => console.warn('Audio playback warning:', err));
+    }
+    syncAudioUI();
+  }
+
+  function toggleTrackById(trackId) {
+    const idx = AUDIO_TRACKS.findIndex((t) => t.id === trackId);
+    if (idx === -1) return;
+    if (activeTrackIdx === idx) {
+      dockDismissed = false;
+      if (guideAudio.paused || guideAudio.ended) {
+        if (guideAudio.ended) guideAudio.currentTime = 0;
+        guideAudio.play().catch((err) => console.warn('Audio playback warning:', err));
+      } else {
+        guideAudio.pause();
+      }
+      syncAudioUI();
+      return;
+    }
+    playTrackAt(idx, { scroll: false });
+  }
+
+  guideAudio.addEventListener('timeupdate', syncAudioUI);
+  guideAudio.addEventListener('loadedmetadata', syncAudioUI);
+  guideAudio.addEventListener('play', syncAudioUI);
+  guideAudio.addEventListener('pause', syncAudioUI);
+  guideAudio.addEventListener('ended', () => {
+    if (autoTourEnabled && activeTrackIdx >= 0 && activeTrackIdx + 1 < AUDIO_TRACKS.length) {
+      playTrackAt(activeTrackIdx + 1, { scroll: true });
+    } else {
+      syncAudioUI();
+    }
+  });
 
   function updateDynamicLabels() {
     const dict = I18N[currentLang];
@@ -55,6 +227,8 @@ function bootstrap() {
           ? 'https://github.com/dycshow/pantheon-of-data-art/blob/main/docs/OPEN_SOURCE_ATLAS.md'
           : 'https://github.com/dycshow/pantheon-of-data-art/blob/main/docs/OPEN_SOURCE_ATLAS_EN.md';
     }
+
+    syncAudioUI();
   }
 
   function applyLanguage(lang) {
@@ -106,6 +280,21 @@ function bootstrap() {
 
     updateDynamicLabels();
 
+    // Seamlessly switch active audio guide language when toggling 中文 <-> EN
+    if (activeTrackIdx >= 0 && activeTrackIdx < AUDIO_TRACKS.length) {
+      const track = AUDIO_TRACKS[activeTrackIdx];
+      const nextUrl = new URL(getAudioSrc(track.id, currentLang), window.location.href).href;
+      if (guideAudio.src !== nextUrl) {
+        const wasPlaying = !guideAudio.paused && !guideAudio.ended;
+        guideAudio.src = nextUrl;
+        guideAudio.load();
+        if (wasPlaying) {
+          guideAudio.play().catch((err) => console.warn('Audio switch playback warning:', err));
+        }
+        syncAudioUI();
+      }
+    }
+
     // Propagate language change into all interactive exhibits
     Object.values(exhibits).forEach((api) => {
       try {
@@ -147,6 +336,77 @@ function bootstrap() {
     if (langBtn) {
       e.preventDefault();
       applyLanguage(langBtn.dataset.lang);
+      return;
+    }
+
+    // a2. Header Audio Guide Tour button
+    const tourBtn = e.target.closest('#btn-audio-tour');
+    if (tourBtn) {
+      e.preventDefault();
+      autoTourEnabled = true;
+      dockDismissed = false;
+      if (activeTrackIdx === -1) {
+        playTrackAt(0, { scroll: true });
+      } else if (guideAudio.paused || guideAudio.ended) {
+        if (guideAudio.ended) guideAudio.currentTime = 0;
+        guideAudio.play().catch((err) => console.warn('Audio playback warning:', err));
+        syncAudioUI();
+      } else {
+        guideAudio.pause();
+        syncAudioUI();
+      }
+      return;
+    }
+
+    // a3. Per-hall Audio Guide buttons
+    const audioHallBtn = e.target.closest('.audio-guide-btn');
+    if (audioHallBtn) {
+      e.preventDefault();
+      toggleTrackById(audioHallBtn.dataset.audioId);
+      return;
+    }
+
+    // a4. Floating Audio Dock controls
+    if (e.target.closest('#audio-dock-toggle')) {
+      e.preventDefault();
+      if (activeTrackIdx === -1) {
+        playTrackAt(0, { scroll: false });
+      } else if (guideAudio.paused || guideAudio.ended) {
+        if (guideAudio.ended) guideAudio.currentTime = 0;
+        guideAudio.play().catch((err) => console.warn('Audio playback warning:', err));
+      } else {
+        guideAudio.pause();
+      }
+      syncAudioUI();
+      return;
+    }
+
+    if (e.target.closest('#audio-dock-prev')) {
+      e.preventDefault();
+      const prevIdx = activeTrackIdx > 0 ? activeTrackIdx - 1 : 0;
+      playTrackAt(prevIdx, { scroll: true });
+      return;
+    }
+
+    if (e.target.closest('#audio-dock-next')) {
+      e.preventDefault();
+      const nextIdx = activeTrackIdx + 1 < AUDIO_TRACKS.length ? activeTrackIdx + 1 : 0;
+      playTrackAt(nextIdx, { scroll: true });
+      return;
+    }
+
+    if (e.target.closest('#audio-dock-autotour')) {
+      e.preventDefault();
+      autoTourEnabled = !autoTourEnabled;
+      syncAudioUI();
+      return;
+    }
+
+    if (e.target.closest('#audio-dock-close')) {
+      e.preventDefault();
+      guideAudio.pause();
+      dockDismissed = true;
+      syncAudioUI();
       return;
     }
 
@@ -276,6 +536,14 @@ function bootstrap() {
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeLightbox();
+  });
+
+  document.getElementById('audio-dock-seek')?.addEventListener('input', (e) => {
+    const val = Number.parseFloat(e.target.value);
+    if (Number.isFinite(val) && Number.isFinite(guideAudio.duration)) {
+      guideAudio.currentTime = Math.max(0, Math.min(val, guideAudio.duration));
+      syncAudioUI();
+    }
   });
 
   // 2. Anti-Copy Context Menu & Drag Interception on Artworks & Interactive Canvases

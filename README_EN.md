@@ -18,6 +18,8 @@
   &nbsp;·&nbsp;
   <a href="#section-manifesto">Manifesto</a>
   &nbsp;·&nbsp;
+  <a href="#section-audio">Audio Guide</a>
+  &nbsp;·&nbsp;
   <a href="#section-halls">Interactive Halls</a>
   &nbsp;·&nbsp;
   <a href="#section-plates">Archival Plates</a>
@@ -40,6 +42,24 @@ Most data tools stop at flattening human stories into interchangeable bar charts
 **How can open-source geometric rigor and classical museum aesthetics make invisible structural truth effortlessly visible?**
 
 Every interactive installation inside this sanctuary transforms smoothly in real time between **`[Raw Entropy]`** and **`[Mathematical Cosmos]`**, letting visitors experience the visceral birth of order firsthand.
+
+---
+
+<a id="section-audio"></a>
+## Curatorial Audio Guide (Acoustic Collection)
+
+> **Geometry you can see, curatorial voice you can hear.** The museum features six bilingual audio-guide tracks: trigger the continuous **Audio Guide Tour** in the top navigation bar or play each hall's narration individually beside its curatorial plaque.
+
+- **Acoustic Voice Profile (English Chief Curator)**: Synthesized in the authoritative **Dean baritone voice (`97.6 Hz` fundamental pitch, calm &amp; deeply resonant delivery)**—chosen to mirror classical gallery solemnity while keeping technical clarity crisp.
+
+| Gallery Chapter | Curatorial Narration Focus | Live Hall | Direct Audio Stream |
+|---|---|---|---|
+| **Prologue · Curatorial Manifesto** | Why humanity needs visual order in a 3-second AI chart era (40s) | [Enter Atrium](https://dycshow.github.io/pantheon-of-data-art/#atrium) | [Listen in English ↗](https://dycshow.github.io/pantheon-of-data-art/assets/audio/00-prologue-en.mp3) |
+| **Hall I · Chronos Astrolabe** | 365 days across four dimensions and golden focus streaks (38s) | [Enter Hall I](https://dycshow.github.io/pantheon-of-data-art/#hall-chronos) | [Listen in English ↗](https://dycshow.github.io/pantheon-of-data-art/assets/audio/01-chronos-en.mp3) |
+| **Hall II · The Loom of Value** | Conserved alluvial flows and Cognitive Intervention (35s) | [Enter Hall II](https://dycshow.github.io/pantheon-of-data-art/#hall-flux) | [Listen in English ↗](https://dycshow.github.io/pantheon-of-data-art/assets/audio/02-flux-en.mp3) |
+| **Hall III · Constellation of Order** | 360° hierarchical edge bundling for systemic dilemmas (32s) | [Enter Hall III](https://dycshow.github.io/pantheon-of-data-art/#hall-constellation) | [Listen in English ↗](https://dycshow.github.io/pantheon-of-data-art/assets/audio/03-constellation-en.mp3) |
+| **Hall IV · The Prism of Truth** | Five-stage morphing on 120 lives exposing the Lie of Averages (42s) | [Enter Hall IV](https://dycshow.github.io/pantheon-of-data-art/#hall-prism) | [Listen in English ↗](https://dycshow.github.io/pantheon-of-data-art/assets/audio/04-prism-en.mp3) |
+| **Hall V · The Curator's Sanctuary** | Obsidian-and-gold archival plates and the Three Laws of Order (44s) | [Enter Hall V](https://dycshow.github.io/pantheon-of-data-art/#hall-sanctuary) | [Listen in English ↗](https://dycshow.github.io/pantheon-of-data-art/assets/audio/05-sanctuary-en.mp3) |
 
 ---
 

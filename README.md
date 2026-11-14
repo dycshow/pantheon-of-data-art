@@ -18,6 +18,8 @@
   &nbsp;·&nbsp;
   <a href="#section-manifesto">策展手记</a>
   &nbsp;·&nbsp;
+  <a href="#section-audio">策展语音导览</a>
+  &nbsp;·&nbsp;
   <a href="#section-halls">展厅总览</a>
   &nbsp;·&nbsp;
   <a href="#section-plates">馆藏版画</a>
@@ -40,6 +42,24 @@
 **如何用严密的几何结构与美术馆级视觉审美，让普通人一眼看懂复杂世界的内在秩序？**
 
 为此，本殿堂中的所有交互展品均支持在 **`[混沌原貌]`** 与 **`[万象归序]`** 之间实时物理变形与数学推演，让观展者亲眼见证秩序诞生那一刻的美学震撼。
+
+---
+
+<a id="section-audio"></a>
+## 策展人语音导览（声学馆藏）
+
+> **不仅有看得见的几何秩序，更有听得见的策展温度。** 本殿堂现已配备全馆六段沉浸式语音导览；在线展厅顶部设有「全馆语音导览」连续巡礼按钮，每座展厅铭牌处均可单独点播。
+
+- **声学策展选型（中文首席策展人声像）**：选用沉稳克制的 **「白桦」低男声（基频 111.4 赫兹，磁性深沉语调，每秒 3.77 字黄金叙事语速）**——兼顾美术馆建筑的肃穆纵深感与数字诗学的清晰节奏，避免过慢衰老感或轻快娱乐感。
+
+| 导览篇章 | 解说核心内容 | 在线展厅直达 | 独立音频直听 |
+|---|---|---|---|
+| **序厅 · 万象归序策展宣言** | AI 时代的秩序之眼，从电子表格焦虑走向五重视觉圣殿（41 秒） | [步入序厅](https://dycshow.github.io/pantheon-of-data-art/#atrium) | [收听纯中文解说 ↗](https://dycshow.github.io/pantheon-of-data-art/assets/audio/00-prologue-zh.mp3) |
+| **第一展厅 · 岁月的年轮** | 一年 365 天四大维度与跨日心流弧线解析（40 秒） | [步入第一展厅](https://dycshow.github.io/pantheon-of-data-art/#hall-chronos) | [收听纯中文解说 ↗](https://dycshow.github.io/pantheon-of-data-art/assets/audio/01-chronos-zh.mp3) |
+| **第二展厅 · 价值的河床** | 守恒织锦追踪生命资本流向与认知觉醒干预机制（38 秒） | [步入第二展厅](https://dycshow.github.io/pantheon-of-data-art/#hall-flux) | [收听纯中文解说 ↗](https://dycshow.github.io/pantheon-of-data-art/assets/audio/02-flux-zh.mp3) |
+| **第三展厅 · 万物的星图** | 三百六十度分层边捆绑星盘与十大现实命题解码器（33 秒） | [步入第三展厅](https://dycshow.github.io/pantheon-of-data-art/#hall-constellation) | [收听纯中文解说 ↗](https://dycshow.github.io/pantheon-of-data-art/assets/audio/03-constellation-zh.mp3) |
+| **第四展厅 · 真相的棱镜** | 一百二十个决策样本五态变形，戳破均值谎言（40 秒） | [步入第四展厅](https://dycshow.github.io/pantheon-of-data-art/#hall-prism) | [收听纯中文解说 ↗](https://dycshow.github.io/pantheon-of-data-art/assets/audio/04-prism-zh.mp3) |
+| **第五展厅 · 秩序的信仰** | 黑曜石金箔四幅馆藏版画与视觉秩序三定律总结（55 秒） | [步入第五展厅](https://dycshow.github.io/pantheon-of-data-art/#hall-sanctuary) | [收听纯中文解说 ↗](https://dycshow.github.io/pantheon-of-data-art/assets/audio/05-sanctuary-zh.mp3) |
 
 ---
 
