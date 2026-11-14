@@ -1,53 +1,62 @@
-# Open-Source Data Visualization Atlas · 开源数据可视化策展图谱
+<p align="center">
+  <strong><a href="./OPEN_SOURCE_ATLAS.md">简体中文版</a></strong> &nbsp;|&nbsp; <a href="./OPEN_SOURCE_ATLAS_EN.md">English Version</a>
+</p>
 
-> **Core Thesis / 策展宣言**  
-> In an era when AI can generate charts and reports in seconds, the scarcest human capability is **visual literacy** — the power to see structural order beneath noisy reality, choose honest encodings, and translate open-source engineering into human insight.
+# 开源数据可视化策展技术图谱
 
----
-
-## I. Theoretical & Methodological Foundations (世界经典可视化思想库)
-
-Before writing a single line of code, every exhibit in *The Pantheon of Order* follows five foundational frameworks:
-
-1. **From Data to Viz** (*Yan Holtz*) — A decision tree driven strictly by **input data structure** (numeric, categorical, time-series, network, spatial). Eliminates structural mismatches and catalogs common statistical pitfalls (e.g., spaghetti line charts, overplotting, pie-slice distortion).
-2. **Visual Vocabulary** (*Financial Times — Alan Smith et al.*) — A taxonomy driven by **analytical communication intent**: *Deviation, Correlation, Ranking, Distribution, Change over Time, Part-to-Whole, Spatial, Flow*.
-3. **Data Viz Project** (*Ferdio*) — A visual morphology catalog indexed by geometric form and functional mapping, pushing creators beyond default bar and line templates.
-4. **Data Humanism** (*Giorgia Lupi — Dear Data / Accurat / Pentagram*) — Rejects cold aggregation when human nuance matters. Advocates encoding multiple personal, emotional, and qualitative dimensions into bespoke hand-crafted glyphs.
-5. **Data Sketches & Scrollytelling** (*Nadieh Bremer & Shirley Wu; The Pudding*) — Proves that **code-driven bespoke geometry** (custom radial layouts, SVG/Canvas force hybrids, scroll-choreographed transitions) can turn empirical datasets into museum-grade interactive essays.
+> **策展宣言**  
+> 在人工智能能够在几秒钟内生成无数表格与图表的时代，人类最稀缺的能力不再是绘图速度，而是**视觉素养**——在混沌表象之下辨识内在结构、选择诚实视觉编码、并将开源几何工程转化为直击人心洞见的创造力。
 
 ---
 
-## II. Open-Source Engine Matrix (世界主流开源技术栈选型矩阵)
+## 壹 · 世界经典可视化思想方法论
 
-| Library / Engine | Core Paradigm | Unrivaled Sweet Spot (不可替代的优势场景) | Avoid Using When (误区警告) |
+在《万象归序》殿堂写下第一行几何代码之前，每一件展品均遵循以下五大经典方法论体系的共同约束：
+
+1. **从数据结构出发（数据形态决策树）**  
+   严格以输入数据的内在拓扑（连续数值、多维分类、周期时序、依存网络、地理空间）驱动图形选择，从源头上杜绝“意大利面折线图”“散点重度遮挡”与“饼图切分失真”等结构错配。
+2. **视觉词汇典（沟通意图词典）**  
+   依据想要传达的认知意图决定图形文法：**偏离对比、相关性、排序权重、分布形态、时序演化、局部与整体占比、空间脉冲、守恒流向**。
+3. **非模板视觉形态库（形态索引法则）**  
+   打破后台千篇一律的柱状与折线惯性，以圆环、弦图、冲积河床、地平线图、沃罗诺伊分割等丰富几何形式匹配现实问题的复杂质感。
+4. **数据人文主义（个体尺度信仰）**  
+   反对在人文与个人成长命题中一味压缩平均值。主张借鉴手绘数据明信片精神，利用多维几何符号为每一个真实个体保存温度、矛盾与尊严。
+5. **程序化叙事几何（滚动舞台编排）**  
+   将冰冷的统计图形与随阅览节奏推进的空间物理变形相结合，证明代码级定制几何与叙事节奏完全可以营造出美术馆级别的认知震撼。
+
+---
+
+## 贰 · 主流开源可视化引擎选型矩阵
+
+| 开源引擎 | 核心设计范式 | 不可替代的优势场景 | 误区与禁用边界 |
 |---|---|---|---|
-| **D3.js** | Low-level Data-to-DOM / Geometric Math | Bespoke art-grade layouts: hierarchical edge bundling, custom radial astrolabes, chord/alluvial flows, physics morphing | Standard KPI corporate dashboards where rapid out-of-the-box config matters more than custom geometry |
-| **Apache ECharts** | High-performance Declarative Canvas/WebGL | Dense enterprise/operational analytics, interactive brushing/zooming, calendar heatmaps, large-volume time series | Ultra-bespoke non-standard organic glyphs or custom force-particle transitions |
-| **Vega-Lite** | Declarative Grammar of Graphics (JSON) | Reproducible research, statistical faceting, rapid hypothesis comparison ("same dataset, 4 encodings") | Cinematic custom animations or fluid WebGL particle physics |
-| **deck.gl** | GPU-accelerated WebGL2 Spatial Layers | Millions of GPS/trajectory arcs, urban commuter pulses, 3D hexagon density grids, global shipping flows | Small tabular datasets without spatial coordinates |
-| **AntV (G2 / G6 / X6)** | Grammar Charts + Graph Topology Engine | Complex supply-chain dependency graphs, knowledge networks, lineage tracing, organizational architectures | Simple standalone sparklines or artistic SVG print posters |
-| **RAWGraphs** | Zero-code Client-side Vector Generator | Rapidly turning messy CSVs into alluvial, bump, or circle-packing SVGs for editorial print & design refinement | Real-time streaming web apps requiring live API state |
-| **Observable Plot** | Concise Exploratory Grammar by Mike Bostock | Fast exploratory data journalism, beeswarm & multi-facet statistical prototyping | Full-screen 3D spatial museum environments |
-| **Three.js / WebGL** | 3D Scene Graph & Custom Shaders | Spatial sculptures, point clouds, architectural digital twins, interactive 3D exhibition centerpieces | 2D quantitative reading where perspective foreshortening distorts value comparisons |
+| **D3.js** | 底层数据绑定与数学比例尺 | 艺术殿堂级定制几何：分层边捆绑星盘、极坐标年轮、桑基流场与弹性粒子形变 | 仅需五分钟交差的常规后台统计报表 |
+| **Apache ECharts** | 高性能声明式画布与显卡渲染 | 十万级金融日志时序分析、日历热力矩阵、交互式缩放刷选与大屏监控 | 极度打破坐标规则的纯生成式艺术雕塑 |
+| **Vega-Lite** | 声明式图形语法规范 | 同一批数据的快速多视角统计分面校验，消除手写代码偏见 | 需要自由物理模拟与电影级粒子特效的舞台 |
+| **deck.gl** | 显卡着色器驱动空间图层 | 百万级城市通勤轨迹、三维六边形密度柱与全球供应链动态飞弧 | 缺乏真实地理经纬度的纯抽象逻辑数据 |
+| **AntV G2 / G6** | 克制设计语言与图拓扑分析引擎 | 企业级血缘链路追踪、多跳依赖网、集群折叠与东方秩序美感产品图表 | 节点少于十个、直接绘制结构插画更清晰的场景 |
+| **RAWGraphs** | 纯本地零代码矢量导出工坊 | 快速将复杂多维表格转换为印刷级矢量冲积图与圆堆积图供深度排版精修 | 需要对接高频实时流接口的线上监控看板 |
+| **Observable Plot** | 精炼探索式统计绘图语法 | 几行代码即可搭建高质量蜂群分布图与分面统计原型，加速数据阅读 | 需要全域全屏定制物理交互的视觉装置 |
+| **Three.js / WebGL** | 三维场景图与自定义着色器 | 高维知识语义星系点云、可漫游的三维数据雕塑与立体数字孪生 | 绝对禁止用于精密金融金额的二维对比 |
 
 ---
 
-## III. Scenario-to-Order Translation Matrix (现实混乱 → 秩序映射表)
+## 叁 · 现实混乱至视觉秩序映射总表
 
-| Real-World Chaos (生活与工作的无序现场) | Hidden Structural Question | Optimal Visual Form | Open-Source Stack | Anti-Pattern to Reject |
+| 现实世界的混沌现场 | 隐藏的核心结构追问 | 最优视觉结构形态 | 推荐开源组合 | 必须拒绝的反模式 |
 |---|---|---|---|---|
-| **365天碎片化日程与注意力耗散** | 深度心流在何时发生、又被什么打断？ | Circadian Radial Rose + Streak Arcs | D3.js + Canvas2D | 密密麻麻的表格清单或普通柱状日历 |
-| **现金流、时间精力与隐形内耗** | 资源从哪来、流向何处、在哪悄悄漏掉？ | Multi-stage Alluvial / Sankey Loom | D3 Sankey / Bezier Flow | 多个孤立的饼图（看不出流向与因果） |
-| **跨部门协作、代码依赖与供应链瓶颈** | 谁是系统单点脆弱性、哪些集群互相耦合？ | Hierarchical Edge Bundling | D3 Cluster + Bundle Curve | 无序的力导向“毛线球”（Hairball Graph） |
-| **人生选择、薪资/收益与风险评估** | 平均值掩盖了多少双峰分化与极端代价？ | Force Beeswarm + Botanical Glyphs | D3 Force + Custom SVG/Canvas | 只展示单一均值柱状图（Average Trap） |
-| **城市通勤、物流与全球资源分布** | 高密度热点与跨区域流动的真实脉冲是什么？ | 3D Arcs & Hexbin Density Layers | deck.gl + MapLibre | 平面静态散点图（严重重叠遮挡） |
+| **一年三百六十五天碎片化日程** | 深度心流在何时发生、又被什么打断？ | 极坐标年轮叠加跨日心流弧线 | 数学比例尺搭配粒子的物理引擎 | 密密麻麻的表格清单或普通方格日历 |
+| **现金流、时间投入与隐形耗散** | 资源从哪来、流向何处、在哪悄悄漏走？ | 多阶段能量守恒冲积织锦 | 守恒贝塞尔流场绘制 | 多个孤立饼图（无法看清因果转化） |
+| **复杂系统依赖与供应链风险** | 谁是全局单点瓶颈、哪些节点互相耦合？ | 三百六十度分层边捆绑拓扑 | 层次聚类布局搭配捆绑曲线 | 杂乱无章互相缠绕的力导向毛线球 |
+| **职业选择、薪酬分布与风险权衡** | 平均数究竟掩盖了多少双峰撕裂与代价？ | 蜂群分布图叠加五维数据人文繁花 | 物理碰撞蜂群搭配矢量花瓣路径 | 只画单一高度柱状图的均值幻觉 |
+| **城市脉冲、交通潮汐与能源运输** | 高密度热点与跨区走廊的真实流向是什么？ | 三维飞弧图层搭配六边形密度柱 | 显卡加速空间图层与矢量暗色底图 | 平面暴力打点导致的全图死黑遮挡 |
 
 ---
 
-## IV. Five Visual Lies in the AI Era (AI 时代必懂的五种视觉误导)
+## 肆 · 智能生成时代必懂的五种视觉误导
 
-1. **The Tyranny of the Mean (平均值的暴政)** — Averaging a bimodal distribution invents a "typical case" that nobody actually experiences. *Fix: Beeswarm or ridgeline distribution.*
-2. **Truncated Axis Panic (截断纵轴制造恐慌)** — Starting a bar chart at 95% instead of 0% magnifies a 1% fluctuation into a visual cliff. *Fix: Always anchor length encodings at zero.*
-3. **Dual-Axis Mirage (双纵轴因果幻觉)** — Scaling two unrelated Y-axes independently can make any two lines look correlated. *Fix: Indexed percentage change or connected scatterplot.*
-4. **Hairball Network Mysticism (毛线球网络玄学)** — Dumping 500 unbundled edges creates visual awe with zero readability. *Fix: Hierarchical edge bundling + interactive ego-network focus.*
-5. **3D Perspective Distortion (3D 透视失真)** — Tilting pie or bar charts makes foreground slices look 2× larger than equal background slices. *Fix: Reserve 3D strictly for genuinely 3D spatial/sculptural data.*
+1. **平均值的暴政**：对双峰分化的群体计算单个均值，会虚构出一个“现实中几乎无人处于其中”的虚假典型值。**修正之道**：使用蜂群图或山脊密度图还原全部分布颗粒度。
+2. **截断纵轴制造恐慌**：将柱状图纵轴起点偷偷设为百分之九十五而非零，会把百分之一的正常波动放大成断崖式暴跌错觉。**修正之道**：凡使用长度编码，纵轴必须锚定零基线。
+3. **双纵轴因果幻觉**：各自独立缩放两条毫无关联指标的左右纵轴，几乎能让任意两条折线显得完美同步。**修正之道**：统一改用基准归一化百分比变化或连通散点轨迹。
+4. **毛线球网络玄学**：不经聚类与边捆绑就把数百条连接线铺满画布，除了制造“看起来高深莫测”的唬人效果外，零可读性。**修正之道**：使用层次边捆绑并支持点击单节点局部穿透聚焦。
+5. **三维透视面积失真**：把二维饼图或柱状图倾斜成所谓三维立体图，会让前景区块因透视畸变显得比等大背景区块大出一倍。**修正之道**：严格将三维空间留给真实拥有立体几何含义的物理与语义星系。

@@ -1,25 +1,51 @@
-// Hall III: 《万物的星图 · Astrolabe of Open Source & Scenarios》
+// Hall III: Constellation of Order
 // D3 Hierarchical Edge Bundling (d3.cluster + d3.lineRadial + d3.curveBundle.beta(0.85))
 import * as d3 from 'd3';
 import { SCENARIO_ECOSYSTEM_NODES } from '../data/curatedData.js';
 
-export function initScenarioConstellation(hostEl, inspectorEls) {
+export function initScenarioConstellation(hostEl, inspectorEls, langInit = 'zh') {
   let mode = 'order'; // 'order' | 'chaos'
   let activeId = 'root.scenarios.personal_chronos';
+  let currentLang = langInit;
 
   const width = 760;
   const height = 700;
-  const radius = Math.min(width, height) * 0.35;
+  const radius = Math.min(width, height) * 0.34;
 
+  hostEl.innerHTML = '';
   const svg = d3
     .select(hostEl)
     .append('svg')
+    .attr('class', 'constellation-svg')
     .attr('viewBox', `${-width / 2} ${-height / 2 + 12} ${width} ${height}`)
     .style('width', '100%')
     .style('height', '100%');
 
-  // Subtle calibration rings
-  const bgGroup = svg.append('g').attr('class', 'constellation-bg');
+  // Subtle diagonal SVG watermark overlay + corner curator mark
+  const wmGroup = svg.append('g').attr('class', 'svg-watermark-layer').attr('pointer-events', 'none');
+  const wmDiagGroup = wmGroup.append('g').attr('transform', 'rotate(-26)');
+  const wmDiagLabels = [];
+  for (let wy = -320; wy <= 320; wy += 190) {
+    for (let wx = -360; wx <= 360; wx += 340) {
+      const tEl = wmDiagGroup
+        .append('text')
+        .attr('x', wx)
+        .attr('y', wy)
+        .attr('text-anchor', 'middle')
+        .style('font-size', '12px')
+        .style('fill', 'rgba(212, 175, 55, 0.045)');
+      wmDiagLabels.push(tEl);
+    }
+  }
+  const wmCornerText = wmGroup
+    .append('text')
+    .attr('x', width / 2 - 22)
+    .attr('y', height / 2 - 14)
+    .attr('text-anchor', 'end')
+    .style('font-size', '10.5px')
+    .style('fill', 'rgba(212, 175, 55, 0.72)');
+
+  const bgGroup = svg.append('g').attr('class', 'constellation-bg').style('transition', 'opacity 0.6s ease');
   [radius * 0.55, radius * 0.84, radius, radius + 34].forEach((r, idx) => {
     bgGroup
       .append('circle')
@@ -29,7 +55,6 @@ export function initScenarioConstellation(hostEl, inspectorEls) {
       .attr('stroke-dasharray', idx === 1 ? '3 5' : null);
   });
 
-  // Build Hierarchy
   const hierarchyData = {
     id: 'root',
     children: [
@@ -51,7 +76,6 @@ export function initScenarioConstellation(hostEl, inspectorEls) {
   const leaves = root.leaves();
   const leafById = new Map(leaves.map((d) => [d.data.id, d]));
 
-  // Build bundled links
   const links = [];
   leaves.forEach((src) => {
     (src.data.targets || []).forEach((tid) => {
@@ -66,14 +90,11 @@ export function initScenarioConstellation(hostEl, inspectorEls) {
     });
   });
 
-  // Compute deterministic chaos positions
   leaves.forEach((d, i) => {
     const angle = (i * 2.39996) % (Math.PI * 2);
     const dist = radius * (0.28 + ((i * 37) % 68) / 100);
     d.chaosX = Math.cos(angle) * dist * 1.1;
     d.chaosY = Math.sin(angle) * dist * 0.9;
-    d.orderX = Math.cos(d.x - Math.PI / 2) * d.y;
-    d.orderY = Math.sin(d.x - Math.PI / 2) * d.y;
   });
 
   const lineRadial = d3
@@ -97,6 +118,7 @@ export function initScenarioConstellation(hostEl, inspectorEls) {
     .data(leaves)
     .join('g')
     .style('cursor', 'pointer')
+    .style('transition', 'transform 0.75s cubic-bezier(0.22, 1, 0.36, 1)')
     .attr('transform', (d) => `rotate(${(d.x * 180) / Math.PI - 90}) translate(${d.y},0)`);
 
   nodeEls
@@ -111,27 +133,53 @@ export function initScenarioConstellation(hostEl, inspectorEls) {
     .attr('x', (d) => (d.x < Math.PI ? 10 : -10))
     .attr('text-anchor', (d) => (d.x < Math.PI ? 'start' : 'end'))
     .attr('transform', (d) => (d.x >= Math.PI ? 'rotate(180)' : null))
-    .style('font-family', '"Noto Serif SC", serif')
-    .style('font-size', '11.5px')
-    .text((d) => d.data.name);
+    .style('font-size', '11px');
 
-  // Center Medallion
   const centerGroup = svg.append('g').attr('text-anchor', 'middle');
   const centerTitle = centerGroup
     .append('text')
     .attr('y', -6)
-    .style('font-family', '"Cormorant Garamond", serif')
-    .style('font-size', '17px')
+    .style('font-size', '16px')
     .style('font-weight', '600')
-    .style('fill', '#F4EFE6')
-    .text('10 SCENARIOS × 12 ENGINES');
+    .style('fill', '#F4EFE6');
   const centerSub = centerGroup
     .append('text')
     .attr('y', 14)
-    .style('font-family', '"JetBrains Mono", monospace')
-    .style('font-size', '10px')
-    .style('fill', '#D4AF37')
-    .text('HIERARCHICAL EDGE BUNDLING');
+    .style('font-size', '10.5px')
+    .style('fill', '#D4AF37');
+
+  function syncLanguageVisuals() {
+    const fontFamily =
+      currentLang === 'zh'
+        ? '"Noto Serif SC", "Songti SC", serif'
+        : '"Cormorant Garamond", Georgia, serif';
+
+    const diagText = currentLang === 'zh' ? 'DYCSHOW · 万象归序' : 'DYCSHOW · PANTHEON OF ORDER';
+    wmDiagLabels.forEach((el) => el.style('font-family', fontFamily).text(diagText));
+    wmCornerText
+      .style('font-family', fontFamily)
+      .text(currentLang === 'zh' ? '© DYCSHOW · 万象归序艺术殿堂' : '© DYCSHOW · THE PANTHEON OF ORDER');
+
+    nodeEls
+      .select('text')
+      .style('font-family', fontFamily)
+      .text((d) => d.data.name[currentLang]);
+
+    centerTitle.style('font-family', fontFamily);
+    centerSub.style('font-family', fontFamily);
+
+    if (mode === 'chaos') {
+      centerTitle.text(currentLang === 'zh' ? '孤岛混沌星云' : 'SILOED ENTROPY');
+      centerSub
+        .style('fill', '#E05A47')
+        .text(currentLang === 'zh' ? '未捆绑的无序毛线球' : 'UNBUNDLED HAIRBALL');
+    } else {
+      centerTitle.text(currentLang === 'zh' ? '十类现实命题 × 十二底层引擎' : '10 SCENARIOS × 12 ENGINES');
+      centerSub
+        .style('fill', '#D4AF37')
+        .text(currentLang === 'zh' ? '三百六十度分层边捆绑拓扑' : 'HIERARCHICAL EDGE BUNDLING');
+    }
+  }
 
   function updateHighlight(selectedId) {
     activeId = selectedId;
@@ -157,7 +205,8 @@ export function initScenarioConstellation(hostEl, inspectorEls) {
         return d.source.data.id === selectedId || d.target.data.id === selectedId ? 0.92 : 0.18;
       });
 
-    nodeEls.select('circle')
+    nodeEls
+      .select('circle')
       .attr('fill', (d) => {
         if (d.data.id === selectedId) return '#F4EFE6';
         return d.data.group === 'scenarios' ? '#D4AF37' : '#3B8EA5';
@@ -165,11 +214,12 @@ export function initScenarioConstellation(hostEl, inspectorEls) {
       .attr('r', (d) => (d.data.id === selectedId ? 6.5 : connectedIds.has(d.data.id) ? 5 : 3.5))
       .attr('opacity', (d) => (connectedIds.has(d.data.id) ? 1 : 0.35));
 
-    nodeEls.select('text')
+    nodeEls
+      .select('text')
       .attr('fill', (d) => {
         if (d.data.id === selectedId) return '#F4EFE6';
         if (connectedIds.has(d.data.id)) return d.data.group === 'scenarios' ? '#D4AF37' : '#8ad6ea';
-        return 'rgba(244,239,230,0.42)';
+        return 'rgba(244,239,230,0.45)';
       })
       .style('font-weight', (d) => (connectedIds.has(d.data.id) ? '600' : '400'));
 
@@ -177,15 +227,22 @@ export function initScenarioConstellation(hostEl, inspectorEls) {
       const info = selectedNode.data;
       const peers = Array.from(connectedIds)
         .filter((id) => id !== selectedId)
-        .map((id) => leafById.get(id)?.data.name)
+        .map((id) => leafById.get(id)?.data.name[currentLang])
         .filter(Boolean)
         .join(' · ');
 
-      inspectorEls.title.textContent = info.name;
-      inspectorEls.meta.textContent = `${info.domain} · 关联节点：${peers}`;
-      inspectorEls.pain.innerHTML = `<strong>混沌痛点：</strong>${info.pain}`;
-      inspectorEls.solution.innerHTML = `<strong>秩序解法：</strong>${info.solution}`;
-      inspectorEls.anti.innerHTML = `<strong>拒绝平庸：</strong>${info.antiPattern}`;
+      inspectorEls.title.textContent = info.name[currentLang];
+      if (currentLang === 'zh') {
+        inspectorEls.meta.textContent = `${info.domain.zh} · 关联节点：${peers}`;
+        inspectorEls.pain.innerHTML = `<strong>混沌痛点：</strong>${info.pain.zh}`;
+        inspectorEls.solution.innerHTML = `<strong>秩序解法：</strong>${info.solution.zh}`;
+        inspectorEls.anti.innerHTML = `<strong>拒绝平庸：</strong>${info.antiPattern.zh}`;
+      } else {
+        inspectorEls.meta.textContent = `${info.domain.en} · Connected: ${peers}`;
+        inspectorEls.pain.innerHTML = `<strong>Raw Chaos:</strong> ${info.pain.en}`;
+        inspectorEls.solution.innerHTML = `<strong>Ordered Form:</strong> ${info.solution.en}`;
+        inspectorEls.anti.innerHTML = `<strong>Reject Mediocrity:</strong> ${info.antiPattern.en}`;
+      }
     }
   }
 
@@ -193,21 +250,16 @@ export function initScenarioConstellation(hostEl, inspectorEls) {
     .on('mouseenter', (_, d) => updateHighlight(d.data.id))
     .on('click', (_, d) => updateHighlight(d.data.id));
 
+  syncLanguageVisuals();
   updateHighlight(activeId);
 
   return {
     setMode(nextMode) {
       mode = nextMode;
-      bgGroup.transition().duration(750).style('opacity', nextMode === 'order' ? 1 : 0.12);
+      bgGroup.style('opacity', nextMode === 'order' ? 1 : 0.12);
 
       if (nextMode === 'chaos') {
-        centerTitle.text('SILOED ENTROPY');
-        centerSub.style('fill', '#E05A47').text('UNBUNDLED HAIRBALL');
-
         nodeEls
-          .transition()
-          .duration(900)
-          .ease(d3.easeCubicInOut)
           .attr('transform', (d) => `translate(${d.chaosX}, ${d.chaosY})`);
 
         nodeEls
@@ -217,17 +269,9 @@ export function initScenarioConstellation(hostEl, inspectorEls) {
           .attr('transform', null);
 
         linkEls
-          .transition()
-          .duration(900)
           .attr('d', (d) => `M${d.source.chaosX},${d.source.chaosY} L${d.target.chaosX},${d.target.chaosY}`);
       } else {
-        centerTitle.text('10 SCENARIOS × 12 ENGINES');
-        centerSub.style('fill', '#D4AF37').text('HIERARCHICAL EDGE BUNDLING');
-
         nodeEls
-          .transition()
-          .duration(900)
-          .ease(d3.easeCubicInOut)
           .attr('transform', (d) => `rotate(${(d.x * 180) / Math.PI - 90}) translate(${d.y},0)`);
 
         nodeEls
@@ -237,10 +281,14 @@ export function initScenarioConstellation(hostEl, inspectorEls) {
           .attr('transform', (d) => (d.x >= Math.PI ? 'rotate(180)' : null));
 
         linkEls
-          .transition()
-          .duration(900)
           .attr('d', (d) => lineRadial(d.path));
       }
+      syncLanguageVisuals();
+      updateHighlight(activeId);
+    },
+    setLang(newLang) {
+      currentLang = newLang;
+      syncLanguageVisuals();
       updateHighlight(activeId);
     },
   };

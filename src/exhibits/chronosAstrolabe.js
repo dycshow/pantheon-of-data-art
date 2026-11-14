@@ -1,23 +1,14 @@
-// Hall I: 《岁月的年轮 · Chronos Astrolabe》
+// Hall I: Chronos Astrolabe
 // D3 radial geometry + Canvas2D spring physics transforming 365 fragmented days into an astronomical radial rose
 import * as d3 from 'd3';
-import { generateChronosYearData } from '../data/curatedData.js';
+import {
+  CHRONOS_CATEGORIES,
+  CHRONOS_MONTHS,
+  generateChronosYearData,
+} from '../data/curatedData.js';
+import { drawCanvasWatermark } from './watermarkHelper.js';
 
-const CATEGORY_COLORS = {
-  deep: '#D4AF37',
-  ai: '#3B8EA5',
-  frag: '#E05A47',
-  rest: '#8C92A4',
-};
-
-const CATEGORY_LABELS = {
-  deep: '深度创造 Deep Craft',
-  ai: 'AI 协同杠杆 AI Leverage',
-  frag: '碎片打断 Interruptions',
-  rest: '身心修复 Restoration',
-};
-
-export function initChronosAstrolabe(canvas, hudMetricsEl) {
+export function initChronosAstrolabe(canvas, hudMetricsEl, langInit = 'zh') {
   const ctx = canvas.getContext('2d');
   const days = generateChronosYearData();
   let width = 800;
@@ -25,10 +16,10 @@ export function initChronosAstrolabe(canvas, hudMetricsEl) {
   let dpr = 1;
   let mode = 'order'; // 'order' | 'chaos'
   let activeFilter = 'all';
+  let currentLang = langInit;
   let hoveredDay = null;
   let t = 0;
 
-  // 365 day nodes + 365 atmospheric interruption sparks
   const dayParticles = days.map((d, i) => ({
     ...d,
     x: 0,
@@ -45,17 +36,30 @@ export function initChronosAstrolabe(canvas, hudMetricsEl) {
     idx: i,
     x: 0,
     y: 0,
-    vx: (Math.random() - 0.5) * 1.4,
-    vy: (Math.random() - 0.5) * 1.4,
     seedA: Math.random() * Math.PI * 2,
     seedR: 0.15 + Math.random() * 0.72,
     color: i % 3 === 0 ? '#E05A47' : 'rgba(244,239,230,0.45)',
   }));
 
+  function updateHudDefault() {
+    if (!hudMetricsEl) return;
+    if (currentLang === 'zh') {
+      hudMetricsEl.textContent =
+        mode === 'order'
+          ? '全年三百六十五天轨迹已归序：黄金弧线串联连续专注周期，赤红尖刺显影碎片打断源'
+          : '混沌原貌：八千七百六十小时散作无序漂浮尘埃，你无法看清到底是什么消耗了精力';
+    } else {
+      hudMetricsEl.textContent =
+        mode === 'order'
+          ? '365 days aligned radially: golden arcs trace sustained deep-focus streaks; vermilion spikes expose attention leaks.'
+          : 'Raw Entropy: 8,760 hours drift as unindexed dust—impossible to diagnose what actually drains your vitality.';
+    }
+  }
+
   function resize() {
     const rect = canvas.parentElement.getBoundingClientRect();
     dpr = Math.min(window.devicePixelRatio || 1, 2);
-    width = rect.width;
+    width = Math.max(320, rect.width);
     height = Math.max(620, rect.height);
     canvas.width = Math.floor(width * dpr);
     canvas.height = Math.floor(height * dpr);
@@ -65,7 +69,7 @@ export function initChronosAstrolabe(canvas, hudMetricsEl) {
   function getOrderGeometry(d) {
     const cx = width * 0.5;
     const cy = height * 0.53;
-    const maxR = Math.min(width, height) * 0.37;
+    const maxR = Math.min(width, height) * 0.36;
     const innerR = maxR * 0.34;
     const angleScale = d3.scaleLinear().domain([0, 365]).range([-Math.PI / 2, Math.PI * 1.5]);
     const theta = angleScale(d.dayIndex);
@@ -97,15 +101,13 @@ export function initChronosAstrolabe(canvas, hudMetricsEl) {
 
     const cx = width * 0.5;
     const cy = height * 0.53;
-    const maxR = Math.min(width, height) * 0.37;
+    const maxR = Math.min(width, height) * 0.36;
     const innerR = maxR * 0.34;
 
-    // Order Background Dial & Month Spokes
     const dialAlpha = mode === 'order' ? 1 : 0.14;
     ctx.save();
     ctx.globalAlpha = dialAlpha;
 
-    // Concentric calibration rings
     [0.34, 0.56, 0.78, 1.0].forEach((ratio, idx) => {
       ctx.beginPath();
       ctx.arc(cx, cy, maxR * ratio, 0, Math.PI * 2);
@@ -117,10 +119,12 @@ export function initChronosAstrolabe(canvas, hudMetricsEl) {
     });
     ctx.setLineDash([]);
 
-    // 12 Month Labels around the outer rim
-    const monthNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-    ctx.font = '10px "JetBrains Mono", monospace';
-    ctx.fillStyle = 'rgba(212, 175, 55, 0.75)';
+    const monthNames = CHRONOS_MONTHS[currentLang] || CHRONOS_MONTHS.zh;
+    ctx.font =
+      currentLang === 'zh'
+        ? '11px "Noto Serif SC", "Songti SC", serif'
+        : '10px "Cormorant Garamond", Georgia, serif';
+    ctx.fillStyle = 'rgba(212, 175, 55, 0.8)';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     monthNames.forEach((m, mIdx) => {
@@ -141,7 +145,6 @@ export function initChronosAstrolabe(canvas, hudMetricsEl) {
     });
     ctx.restore();
 
-    // Update & render 365 day particles + radial needles
     dayParticles.forEach((p, idx) => {
       const geo = getOrderGeometry(p);
       let targetX, targetY;
@@ -167,9 +170,8 @@ export function initChronosAstrolabe(canvas, hudMetricsEl) {
 
       const isMatch = activeFilter === 'all' || p.dominant === activeFilter;
       const isHovered = hoveredDay && hoveredDay.dayIndex === p.dayIndex;
-      const baseColor = CATEGORY_COLORS[p.dominant];
+      const baseColor = CHRONOS_CATEGORIES[p.dominant].color;
 
-      // Draw delicate radial spoke in order mode
       if (mode === 'order') {
         ctx.beginPath();
         ctx.moveTo(geo.ix, geo.iy);
@@ -180,7 +182,6 @@ export function initChronosAstrolabe(canvas, hudMetricsEl) {
         ctx.stroke();
       }
 
-      // Draw day star node
       ctx.beginPath();
       const radius = isHovered ? 5.5 : p.streakLen >= 4 && isMatch ? 2.8 : 1.9;
       ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
@@ -190,7 +191,6 @@ export function initChronosAstrolabe(canvas, hudMetricsEl) {
     });
     ctx.globalAlpha = 1;
 
-    // Draw golden bezier flow arcs bridging deep-work streaks in order mode
     if (mode === 'order' && (activeFilter === 'all' || activeFilter === 'deep' || activeFilter === 'ai')) {
       ctx.save();
       for (let i = 1; i < dayParticles.length; i++) {
@@ -208,7 +208,6 @@ export function initChronosAstrolabe(canvas, hudMetricsEl) {
       ctx.restore();
     }
 
-    // In chaos mode, scatter noisy interruption sparks
     if (mode === 'chaos') {
       noiseSparks.forEach((s) => {
         const a = s.seedA + t * 0.45 * (s.idx % 2 === 0 ? 1 : -1);
@@ -226,17 +225,44 @@ export function initChronosAstrolabe(canvas, hudMetricsEl) {
       ctx.globalAlpha = 1;
     }
 
-    // Center Astrolabe Medallion Summary
+    // Center Astrolabe Medallion Summary (pure Chinese or pure English)
     ctx.save();
     ctx.textAlign = 'center';
     ctx.fillStyle = '#F4EFE6';
-    ctx.font = '600 18px "Cormorant Garamond", serif';
-    ctx.fillText(mode === 'order' ? '365 DAYS' : 'ENTROPY', cx, cy - 6);
+    const titleFont =
+      currentLang === 'zh'
+        ? '600 17px "Noto Serif SC", "Songti SC", serif'
+        : '600 18px "Cormorant Garamond", Georgia, serif';
+    const subFont =
+      currentLang === 'zh'
+        ? '500 11px "Noto Serif SC", "Songti SC", serif'
+        : '500 10.5px "Cormorant Garamond", Georgia, serif';
+
+    ctx.font = titleFont;
+    const centerMain =
+      currentLang === 'zh'
+        ? mode === 'order'
+          ? '三百六十五日'
+          : '混沌之境'
+        : mode === 'order'
+          ? '365 DAYS'
+          : 'RAW ENTROPY';
+    ctx.fillText(centerMain, cx, cy - 6);
+
     ctx.fillStyle = mode === 'order' ? '#D4AF37' : '#E05A47';
-    ctx.font = '10px "JetBrains Mono", monospace';
-    ctx.fillText(mode === 'order' ? 'RADIAL ORDER' : 'UNMAPPED NOISE', cx, cy + 14);
+    ctx.font = subFont;
+    const centerSub =
+      currentLang === 'zh'
+        ? mode === 'order'
+          ? '径向天体年轮'
+          : '未映射时间碎片'
+        : mode === 'order'
+          ? 'RADIAL COSMOS'
+          : 'UNMAPPED NOISE';
+    ctx.fillText(centerSub, cx, cy + 14);
     ctx.restore();
 
+    drawCanvasWatermark(ctx, width, height, currentLang, 82);
     requestAnimationFrame(draw);
   }
 
@@ -258,7 +284,7 @@ export function initChronosAstrolabe(canvas, hudMetricsEl) {
     const mx = e.clientX - rect.left;
     const my = e.clientY - rect.top;
     let best = null;
-    let bestDist = 400;
+    let bestDist = 420;
     for (const p of dayParticles) {
       const dx = p.x - mx;
       const dy = p.y - my;
@@ -270,30 +296,39 @@ export function initChronosAstrolabe(canvas, hudMetricsEl) {
     }
     hoveredDay = best;
     if (best && hudMetricsEl) {
-      hudMetricsEl.innerHTML =
-        `<strong>${best.monthLabel} · ${best.dateLabel}</strong> — 深度创造 ${best.deepHours}h · AI 协同 ${best.aiHours}h · 碎片打断 ${best.fragHours}h · 主导状态：${CATEGORY_LABELS[best.dominant]}` +
-        (best.streakLen >= 3 ? ` · 连续心流第 ${best.streakLen} 天` : '');
+      const catName = CHRONOS_CATEGORIES[best.dominant].name[currentLang];
+      const dateStr = best.dateLabel[currentLang];
+      if (currentLang === 'zh') {
+        hudMetricsEl.innerHTML =
+          `<strong>${dateStr}</strong> —— 深度创造 ${best.deepHours} 小时 · 协同杠杆 ${best.aiHours} 小时 · 碎片打断 ${best.fragHours} 小时 · 主导状态：${catName}` +
+          (best.streakLen >= 3 ? ` · 连续心流第 ${best.streakLen} 天` : '');
+      } else {
+        hudMetricsEl.innerHTML =
+          `<strong>${dateStr}</strong> — Deep Work ${best.deepHours}h · AI Leverage ${best.aiHours}h · Interrupted ${best.fragHours}h · Dominant: ${catName}` +
+          (best.streakLen >= 3 ? ` · Flow Streak Day ${best.streakLen}` : '');
+      }
     }
   });
 
   canvas.addEventListener('mouseleave', () => {
     hoveredDay = null;
+    updateHudDefault();
   });
 
+  updateHudDefault();
   requestAnimationFrame(draw);
 
   return {
     setMode(nextMode) {
       mode = nextMode;
-      if (hudMetricsEl) {
-        hudMetricsEl.textContent =
-          nextMode === 'order'
-            ? '365 天轨迹已归序 · 黄金弧线串联出高产出连击周期，红色尖刺显影碎片打断源'
-            : '混沌原貌：8760 小时化作无序漂浮尘埃，你无法看清到底是什么消耗了精力';
-      }
+      updateHudDefault();
     },
     setFilter(filter) {
       activeFilter = filter;
+    },
+    setLang(newLang) {
+      currentLang = newLang;
+      updateHudDefault();
     },
   };
 }

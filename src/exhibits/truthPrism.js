@@ -1,71 +1,68 @@
-// Hall IV: 《真相的棱镜 · The Prism of Truth》
+// Hall IV: The Prism of Truth
 // Same 120-specimen dataset morphing across 5 encodings:
-// 0. Chaos -> A. Bar Averages (The Lie) -> B. Beeswarm Distribution -> C. Trade-off Scatter -> D. Giorgia Lupi Botanical Glyphs
+// 0. Chaos -> A. Bar Averages -> B. Force Beeswarm -> C. Trade-off Scatter -> D. Five-Petal Botanical Glyphs
 import * as d3 from 'd3';
-import { generateDecisionCohort } from '../data/curatedData.js';
+import {
+  PRISM_ARCHETYPES,
+  PRISM_STAGE_ESSAYS,
+  generateDecisionCohort,
+} from '../data/curatedData.js';
 
-const STAGE_ESSAYS = {
-  chaos: {
-    title: '0 · 未经编码的原始个体噪音',
-    desc: '120 位探索者的职业与生活决策杂乱堆叠，没有任何统计尺度，大脑只能看见一片无解的尘埃。',
-    lesson: '没有视觉编码的数据只是噪声；但错误的编码甚至比噪声更危险。',
-  },
-  bar: {
-    title: '视角 A · 平均值的谎言 (The Tyranny of the Mean)',
-    desc: '柱状图冷冰冰地告诉你：四类赛道的「综合均值」几乎都在 50–65 分之间相差无几！这是 AI 一键做表最常制造的“盲区”——它抹平了一切极端代价与个体分化。',
-    lesson: '只要看见只给平均值的柱状图，立刻追问：它的方差、双峰分化与尾部代价是什么？',
-  },
-  beeswarm: {
-    title: '视角 B · 个体颗粒度回归 (Force Beeswarm)',
-    desc: '把柱状图打散成 120 个真实个体，惊人真相瞬间浮现：「独立数字工匠」内部呈现明显的双峰撕裂，而「传统高压赛道」高财务回报背后伴随极高聚集密度。',
-    lesson: 'Beeswarm（蜂群图）既保留了分布形态，又让每一个真实个体都不被“平均”掉。',
-  },
-  scatter: {
-    title: '视角 C · 时间自由度 × 焦虑代价前沿',
-    desc: '横轴是「时间自由度」，纵轴是「长期焦虑指数」。那些表面光鲜的赛道往往左上角扎堆（高焦虑低自由），而 AI 协同杠杆者正在向右下角“帕累托前沿”突围。',
-    lesson: '二维关系散点图揭示隐藏的权衡法则（Trade-off），破除单维度攀比。',
-  },
-  glyphs: {
-    title: '视角 D · 数据人文主义繁花 (Botanical Data Glyphs)',
-    desc: '灵感源自 Giorgia Lupi 收藏于 MoMA 的《Dear Data》：每朵几何花完整编码一个人的五维生命质感（创造力、财务、自由、韧性、复利），一眼看见繁杂人生的全息秩序。',
-    lesson: '最高级的可视化不只是为了算术效率，更是为了让人重新看见复杂生命本身的尊严与美感。',
-  },
-};
-
-export function initTruthPrism(hostEl, els) {
+export function initTruthPrism(hostEl, els, langInit = 'zh') {
   const cohort = generateDecisionCohort();
   let currentMode = 'glyphs';
+  let currentLang = langInit;
 
   const width = 820;
   const height = 620;
-  const margin = { top: 86, right: 44, bottom: 78, left: 68 };
+  const margin = { top: 88, right: 44, bottom: 92, left: 74 };
   const innerW = width - margin.left - margin.right;
   const innerH = height - margin.top - margin.bottom;
 
+  hostEl.innerHTML = '';
   const svg = d3
     .select(hostEl)
     .append('svg')
+    .attr('class', 'prism-svg')
     .attr('viewBox', `0 0 ${width} ${height}`)
     .style('width', '100%')
     .style('height', '100%');
 
+  // Embedded SVG provenance watermark layer
+  const wmGroup = svg.append('g').attr('class', 'svg-watermark-layer').attr('pointer-events', 'none');
+  const wmDiagGroup = wmGroup
+    .append('g')
+    .attr('transform', `translate(${width / 2}, ${height / 2}) rotate(-26)`);
+  const wmDiagLabels = [];
+  for (let wy = -260; wy <= 260; wy += 180) {
+    for (let wx = -320; wx <= 320; wx += 320) {
+      wmDiagLabels.push(
+        wmDiagGroup
+          .append('text')
+          .attr('x', wx)
+          .attr('y', wy)
+          .attr('text-anchor', 'middle')
+          .style('font-size', '12px')
+          .style('fill', 'rgba(212, 175, 55, 0.045)')
+      );
+    }
+  }
+  const wmCornerText = wmGroup
+    .append('text')
+    .attr('x', width - 20)
+    .attr('y', height - 88)
+    .attr('text-anchor', 'end')
+    .style('font-size', '10.5px')
+    .style('fill', 'rgba(212, 175, 55, 0.72)');
+
   const g = svg.append('g').attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-  const archetypes = [
-    { key: 'high_burn', label: '传统高压赛道', color: '#E05A47' },
-    { key: 'steady_drift', label: '惯性舒适区', color: '#8C92A4' },
-    { key: 'indie_craft', label: '独立数字工匠', color: '#3B8EA5' },
-    { key: 'ai_leveraged', label: 'AI 协同杠杆者', color: '#D4AF37' },
-  ];
-
-  // Precompute Group Averages for Stage A (Bar Lie)
-  const avgByArch = archetypes.map((a) => {
+  const avgByArch = PRISM_ARCHETYPES.map((a) => {
     const sub = cohort.filter((d) => d.archetype === a.key);
     const mean = d3.mean(sub, (d) => d.composite);
     return { ...a, mean };
   });
 
-  // Precompute positions for every mode
   // 0. Chaos
   cohort.forEach((d, i) => {
     const a = (i * 2.39996) % (Math.PI * 2);
@@ -76,11 +73,11 @@ export function initTruthPrism(hostEl, els) {
     };
   });
 
-  // A. Bar Averages (particles pack into deceptive uniform bars)
-  const xArch = d3.scaleBand().domain(archetypes.map((a) => a.key)).range([20, innerW - 20]).padding(0.32);
+  // A. Bar Averages
+  const xArch = d3.scaleBand().domain(PRISM_ARCHETYPES.map((a) => a.key)).range([20, innerW - 20]).padding(0.32);
   const yBar = d3.scaleLinear().domain([0, 100]).range([innerH - 24, 24]);
 
-  const archBuckets = new Map(archetypes.map((a) => [a.key, []]));
+  const archBuckets = new Map(PRISM_ARCHETYPES.map((a) => [a.key, []]));
   cohort.forEach((d) => archBuckets.get(d.archetype).push(d));
   archBuckets.forEach((items, key) => {
     const bx = xArch(key);
@@ -100,9 +97,9 @@ export function initTruthPrism(hostEl, els) {
     });
   });
 
-  // B. Beeswarm (X = Freedom Score, Y grouped by Archetype band via synchronous d3.forceSimulation)
+  // B. Force Beeswarm
   const xBee = d3.scaleLinear().domain([0, 100]).range([24, innerW - 24]);
-  const yBandBee = d3.scaleBand().domain(archetypes.map((a) => a.key)).range([20, innerH - 30]).padding(0.15);
+  const yBandBee = d3.scaleBand().domain(PRISM_ARCHETYPES.map((a) => a.key)).range([20, innerH - 30]).padding(0.15);
 
   const beeNodes = cohort.map((d) => ({
     ...d,
@@ -120,14 +117,14 @@ export function initTruthPrism(hostEl, els) {
     cohort[i].posBee = { x: b.x, y: b.y };
   });
 
-  // C. Scatter (X = Freedom, Y = Anxiety)
+  // C. Scatter
   const xScat = d3.scaleLinear().domain([0, 100]).range([28, innerW - 24]);
   const yScat = d3.scaleLinear().domain([0, 100]).range([innerH - 28, 22]);
   cohort.forEach((d) => {
     d.posScatter = { x: xScat(d.freedom), y: yScat(d.anxiety) };
   });
 
-  // D. Botanical Glyphs Grid (12 cols × 10 rows sorted by compounding)
+  // D. Botanical Glyphs Grid
   const sortedForGrid = [...cohort].sort((a, b) => b.compounding - a.compounding);
   const gCols = 12;
   const gRows = 10;
@@ -140,11 +137,9 @@ export function initTruthPrism(hostEl, els) {
     };
   });
 
-  // Layer groups: Axes/Bar outlines + Specimens
   const guideLayer = g.append('g').attr('class', 'prism-guides');
   const specimenLayer = g.append('g').attr('class', 'prism-specimens');
 
-  // Create 5-petal botanical path generator for each specimen
   function buildFlowerPath(d, scale = 1) {
     const dims = [d.creativity, d.financial, d.freedom, d.resilience, d.compounding];
     let path = '';
@@ -170,7 +165,9 @@ export function initTruthPrism(hostEl, els) {
     .join('g')
     .attr('class', 'specimen')
     .style('cursor', 'pointer')
-    .attr('transform', (d) => `translate(${d.posGlyph.x}, ${d.posGlyph.y})`);
+    .style('transition', 'transform 0.85s cubic-bezier(0.22, 1, 0.36, 1)')
+    .attr('transform', (d) => `translate(${d.posGlyph.x}, ${d.posGlyph.y})`)
+    .style('transform', (d) => `translate(${d.posGlyph.x}px, ${d.posGlyph.y}px)`);
 
   specimenGroups
     .append('path')
@@ -179,7 +176,8 @@ export function initTruthPrism(hostEl, els) {
     .attr('fill', (d) => d.color)
     .attr('fill-opacity', 0.24)
     .attr('stroke', (d) => d.color)
-    .attr('stroke-width', 1.1);
+    .attr('stroke-width', 1.1)
+    .style('transition', 'opacity 0.55s ease');
 
   specimenGroups
     .append('circle')
@@ -187,22 +185,59 @@ export function initTruthPrism(hostEl, els) {
     .attr('r', 2.4)
     .attr('fill', (d) => d.color)
     .attr('stroke', '#070709')
-    .attr('stroke-width', 0.8);
+    .attr('stroke-width', 0.8)
+    .style('transition', 'r 0.45s ease');
 
-  specimenGroups.on('mouseenter', function (_, d) {
-    d3.select(this).select('.core-dot').attr('r', 5).attr('fill', '#F4EFE6');
-    d3.select(this).select('.petal-shape').attr('fill-opacity', 0.55).attr('stroke', '#F4EFE6');
-    if (els.hudMetrics) {
-      els.hudMetrics.innerHTML =
-        `<strong>${d.code} · ${d.archetypeLabel}</strong> — 创造力 ${d.creativity} · 财务 ${d.financial} · 自由度 ${d.freedom} · 韧性 ${d.resilience} · 十年复利 ${d.compounding} (综合均值 ${d.composite})`;
+  function updateHudDefault() {
+    if (!els.hudMetrics) return;
+    if (currentLang === 'zh') {
+      els.hudMetrics.textContent = '当前视窗：一百二十个真实样本正在以多维几何形态并置呈现';
+    } else {
+      els.hudMetrics.textContent = 'Active Viewport: 120 human decision specimens mapped across multi-dimensional visual encodings.';
     }
-  }).on('mouseleave', function (_, d) {
-    d3.select(this).select('.core-dot').attr('r', currentMode === 'glyphs' ? 2.4 : 4.2).attr('fill', d.color);
-    d3.select(this).select('.petal-shape').attr('fill-opacity', 0.24).attr('stroke', d.color);
-  });
+  }
+
+  specimenGroups
+    .on('mouseenter', function (_, d) {
+      d3.select(this).select('.core-dot').attr('r', 5).attr('fill', '#F4EFE6');
+      d3.select(this).select('.petal-shape').attr('fill-opacity', 0.55).attr('stroke', '#F4EFE6');
+      if (els.hudMetrics) {
+        if (currentLang === 'zh') {
+          els.hudMetrics.innerHTML =
+            `<strong>${d.code.zh} · ${d.archetypeLabel.zh}</strong> —— 创造力 ${d.creativity} · 财务 ${d.financial} · 自由度 ${d.freedom} · 韧性 ${d.resilience} · 十年复利 ${d.compounding}（综合均值 ${d.composite}）`;
+        } else {
+          els.hudMetrics.innerHTML =
+            `<strong>${d.code.en} · ${d.archetypeLabel.en}</strong> — Creativity ${d.creativity} · Finance ${d.financial} · Sovereignty ${d.freedom} · Resilience ${d.resilience} · Compounding ${d.compounding} (Mean ${d.composite})`;
+        }
+      }
+    })
+    .on('mouseleave', function (_, d) {
+      d3.select(this)
+        .select('.core-dot')
+        .attr('r', currentMode === 'glyphs' ? 2.4 : 4.2)
+        .attr('fill', d.color);
+      d3.select(this).select('.petal-shape').attr('fill-opacity', 0.24).attr('stroke', d.color);
+      updateHudDefault();
+    });
+
+  function renderWatermarks() {
+    const fontFamily =
+      currentLang === 'zh'
+        ? '"Noto Serif SC", "Songti SC", serif'
+        : '"Cormorant Garamond", Georgia, serif';
+    const diagText = currentLang === 'zh' ? 'DYCSHOW · 万象归序' : 'DYCSHOW · PANTHEON OF ORDER';
+    wmDiagLabels.forEach((el) => el.style('font-family', fontFamily).text(diagText));
+    wmCornerText
+      .style('font-family', fontFamily)
+      .text(currentLang === 'zh' ? '© DYCSHOW · 万象归序艺术殿堂' : '© DYCSHOW · THE PANTHEON OF ORDER');
+  }
 
   function renderGuides(mode) {
     guideLayer.selectAll('*').remove();
+    const fontFamily =
+      currentLang === 'zh'
+        ? '"Noto Serif SC", "Songti SC", serif'
+        : '"Cormorant Garamond", Georgia, serif';
 
     if (mode === 'bar') {
       avgByArch.forEach((a) => {
@@ -222,19 +257,22 @@ export function initTruthPrism(hostEl, els) {
           .attr('x', xArch(a.key) + xArch.bandwidth() * 0.5)
           .attr('y', yBar(a.mean) - 10)
           .attr('text-anchor', 'middle')
-          .style('font-family', '"JetBrains Mono", monospace')
+          .style('font-family', fontFamily)
           .style('font-size', '12px')
           .style('fill', '#F4EFE6')
-          .text(`AVG ${a.mean.toFixed(1)}`);
+          .text(
+            currentLang === 'zh' ? `均值 ${a.mean.toFixed(1)}` : `MEAN ${a.mean.toFixed(1)}`
+          );
 
         guideLayer
           .append('text')
           .attr('x', xArch(a.key) + xArch.bandwidth() * 0.5)
-          .attr('y', innerH + 4)
+          .attr('y', innerH + 6)
           .attr('text-anchor', 'middle')
-          .style('font-size', '12px')
+          .style('font-family', fontFamily)
+          .style('font-size', '11.5px')
           .style('fill', a.color)
-          .text(a.label);
+          .text(a.label[currentLang]);
       });
     } else if (mode === 'beeswarm') {
       guideLayer
@@ -242,18 +280,23 @@ export function initTruthPrism(hostEl, els) {
         .attr('transform', `translate(0, ${innerH - 16})`)
         .call(d3.axisBottom(xBee).ticks(5))
         .call((ax) => ax.selectAll('path,line').attr('stroke', 'rgba(244,239,230,0.22)'))
-        .call((ax) => ax.selectAll('text').attr('fill', '#8C92A4').style('font-family', 'JetBrains Mono'));
+        .call((ax) => ax.selectAll('text').attr('fill', '#8C92A4').style('font-family', fontFamily));
 
       guideLayer
         .append('text')
         .attr('x', innerW * 0.5)
-        .attr('y', innerH + 18)
+        .attr('y', innerH + 20)
         .attr('text-anchor', 'middle')
+        .style('font-family', fontFamily)
         .style('font-size', '11px')
         .style('fill', '#D4AF37')
-        .text('时间自由度分布 (0 → 100) · 注意蓝点群体内部的双峰撕裂');
+        .text(
+          currentLang === 'zh'
+            ? '时间自由度分布（零至一百）· 留意独立工匠群体内部的双峰撕裂'
+            : 'Time Sovereignty Distribution (0 → 100) · Observe the sharp bimodal split inside Indie Craft'
+        );
 
-      archetypes.forEach((a) => {
+      PRISM_ARCHETYPES.forEach((a) => {
         const cy = yBandBee(a.key) + yBandBee.bandwidth() * 0.5;
         guideLayer
           .append('line')
@@ -268,9 +311,10 @@ export function initTruthPrism(hostEl, els) {
           .attr('y', cy)
           .attr('text-anchor', 'end')
           .attr('dy', '0.32em')
-          .style('font-size', '11px')
+          .style('font-family', fontFamily)
+          .style('font-size', '10.5px')
           .style('fill', a.color)
-          .text(a.label.slice(0, 4));
+          .text(currentLang === 'zh' ? a.label.zh.slice(0, 4) : a.label.en.split(' ')[0]);
       });
     } else if (mode === 'scatter') {
       guideLayer
@@ -278,23 +322,24 @@ export function initTruthPrism(hostEl, els) {
         .attr('transform', `translate(0, ${innerH - 22})`)
         .call(d3.axisBottom(xScat).ticks(5))
         .call((ax) => ax.selectAll('path,line').attr('stroke', 'rgba(244,239,230,0.22)'))
-        .call((ax) => ax.selectAll('text').attr('fill', '#8C92A4').style('font-family', 'JetBrains Mono'));
+        .call((ax) => ax.selectAll('text').attr('fill', '#8C92A4').style('font-family', fontFamily));
 
       guideLayer
         .append('g')
         .attr('transform', 'translate(24, 0)')
         .call(d3.axisLeft(yScat).ticks(5))
         .call((ax) => ax.selectAll('path,line').attr('stroke', 'rgba(244,239,230,0.22)'))
-        .call((ax) => ax.selectAll('text').attr('fill', '#8C92A4').style('font-family', 'JetBrains Mono'));
+        .call((ax) => ax.selectAll('text').attr('fill', '#8C92A4').style('font-family', fontFamily));
 
       guideLayer
         .append('text')
         .attr('x', innerW * 0.5)
-        .attr('y', innerH + 16)
+        .attr('y', innerH + 18)
         .attr('text-anchor', 'middle')
+        .style('font-family', fontFamily)
         .style('font-size', '11px')
         .style('fill', '#D4AF37')
-        .text('时间自由度 (Freedom) →');
+        .text(currentLang === 'zh' ? '时间自由度 →' : 'Time Sovereignty →');
 
       guideLayer
         .append('text')
@@ -302,11 +347,11 @@ export function initTruthPrism(hostEl, els) {
         .attr('x', -innerH * 0.5)
         .attr('y', -18)
         .attr('text-anchor', 'middle')
+        .style('font-family', fontFamily)
         .style('font-size', '11px')
         .style('fill', '#E05A47')
-        .text('← 长期焦虑指数 (Anxiety)');
+        .text(currentLang === 'zh' ? '← 长期焦虑指数' : '← Chronic Anxiety Index');
 
-      // Pareto frontier subtle dashed guide
       guideLayer
         .append('path')
         .attr('d', `M ${xScat(55)},${yScat(55)} Q ${xScat(76)},${yScat(30)} ${xScat(94)},${yScat(16)}`)
@@ -316,36 +361,45 @@ export function initTruthPrism(hostEl, els) {
 
       guideLayer
         .append('text')
-        .attr('x', xScat(82))
+        .attr('x', xScat(80))
         .attr('y', yScat(14))
         .attr('text-anchor', 'middle')
-        .style('font-family', 'JetBrains Mono')
-        .style('font-size', '10px')
+        .style('font-family', fontFamily)
+        .style('font-size', '10.5px')
         .style('fill', '#D4AF37')
-        .text('PARETO FRONTIER // 高自由低焦虑区');
+        .text(currentLang === 'zh' ? '帕累托最优前沿 · 高自由低焦虑区' : 'PARETO FRONTIER // SOVEREIGN & CALM');
     } else if (mode === 'glyphs') {
-      // Subtle botanical legend at top
-      const labels = ['上: 创造力', '右上: 财务', '右下: 自由度', '左下: 韧性', '左上: 十年复利'];
+      const legendStr =
+        currentLang === 'zh'
+          ? '五片花瓣朝向编码：上为创造力 · 右上为财务 · 右下为自由度 · 左下为韧性 · 左上为十年复利'
+          : 'Five-Petal Glyph Legend: Top Creativity · Upper-Right Finance · Lower-Right Sovereignty · Lower-Left Resilience · Upper-Left Compounding';
       guideLayer
         .append('text')
         .attr('x', innerW * 0.5)
         .attr('y', -10)
         .attr('text-anchor', 'middle')
-        .style('font-family', 'JetBrains Mono')
+        .style('font-family', fontFamily)
         .style('font-size', '10.5px')
-        .style('fill', 'rgba(244,239,230,0.62)')
-        .text(`五片花瓣朝向编码：${labels.join(' · ')}（按十年复利从左上至右下排序）`);
+        .style('fill', 'rgba(244,239,230,0.68)')
+        .text(legendStr);
+    }
+  }
+
+  function syncEssay(mode) {
+    const essay = PRISM_STAGE_ESSAYS[mode]?.[currentLang];
+    if (essay && els.stageTitle) {
+      els.stageTitle.textContent = essay.title;
+      els.stageDesc.textContent = essay.desc;
+      els.lesson.textContent = essay.lesson;
     }
   }
 
   function setMode(mode) {
     currentMode = mode;
     renderGuides(mode);
+    renderWatermarks();
 
     specimenGroups
-      .transition()
-      .duration(950)
-      .ease(d3.easeCubicInOut)
       .attr('transform', (d) => {
         const pt =
           mode === 'chaos'
@@ -358,29 +412,46 @@ export function initTruthPrism(hostEl, els) {
                   ? d.posScatter
                   : d.posGlyph;
         return `translate(${pt.x}, ${pt.y})`;
+      })
+      .style('transform', (d) => {
+        const pt =
+          mode === 'chaos'
+            ? d.posChaos
+            : mode === 'bar'
+              ? d.posBar
+              : mode === 'beeswarm'
+                ? d.posBee
+                : mode === 'scatter'
+                  ? d.posScatter
+                  : d.posGlyph;
+        return `translate(${pt.x}px, ${pt.y}px)`;
       });
 
     specimenGroups
       .select('.petal-shape')
-      .transition()
-      .duration(650)
       .style('opacity', mode === 'glyphs' ? 1 : 0);
 
     specimenGroups
       .select('.core-dot')
-      .transition()
-      .duration(650)
       .attr('r', mode === 'glyphs' ? 2.4 : mode === 'bar' ? 3.8 : 4.5);
 
-    const essay = STAGE_ESSAYS[mode];
-    if (essay && els.stageTitle) {
-      els.stageTitle.textContent = essay.title;
-      els.stageDesc.textContent = essay.desc;
-      els.lesson.textContent = essay.lesson;
-    }
+    syncEssay(mode);
   }
 
   setMode('glyphs');
+  updateHudDefault();
 
-  return { setMode };
+  return {
+    setMode,
+    setStage(mode) {
+      setMode(mode);
+    },
+    setLang(newLang) {
+      currentLang = newLang;
+      renderGuides(currentMode);
+      renderWatermarks();
+      syncEssay(currentMode);
+      updateHudDefault();
+    },
+  };
 }

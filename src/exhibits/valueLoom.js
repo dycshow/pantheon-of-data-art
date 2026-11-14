@@ -1,19 +1,20 @@
-// Hall II: 《价值的河床 · The Loom of Value》
-// Multi-stage Cubic-Bezier Alluvial Loom + 600 flowing luminescent particles
-// Supports Chaos Rain <-> Order Loom AND "认知觉醒干预 (AI + 系统重构)" live flow rerouting
+// Hall II: The Loom of Value
+// Multi-stage Cubic-Bezier Alluvial Loom + 560 flowing luminescent particles
 import { VALUE_FLOW_MODEL } from '../data/curatedData.js';
+import { drawCanvasWatermark } from './watermarkHelper.js';
 
-export function initValueLoom(canvas, hudMetricsEl) {
+export function initValueLoom(canvas, hudMetricsEl, langInit = 'zh') {
   const ctx = canvas.getContext('2d');
   let width = 820;
   let height = 620;
   let dpr = 1;
   let mode = 'order'; // 'order' | 'chaos'
   let awakened = false;
+  let currentLang = langInit;
   let hoveredNodeId = null;
   let t = 0;
 
-  let currentLinks = VALUE_FLOW_MODEL.baselineLinks.map((l) => ({ ...l }));
+  const currentLinks = VALUE_FLOW_MODEL.baselineLinks.map((l) => ({ ...l }));
   let targetLinks = VALUE_FLOW_MODEL.baselineLinks;
 
   const droplets = Array.from({ length: 560 }, (_, i) => ({
@@ -28,10 +29,29 @@ export function initValueLoom(canvas, hudMetricsEl) {
     size: i % 11 === 0 ? 2.4 : 1.5,
   }));
 
+  function updateHudDefault() {
+    if (!hudMetricsEl) return;
+    if (currentLang === 'zh') {
+      hudMetricsEl.textContent =
+        mode === 'chaos'
+          ? '混沌雨幕：没有流向结构的零散账单，让人根本找不到真正的价值漏斗'
+          : awakened
+            ? '认知觉醒干预已激活：隐形熵增损耗从 68 单位锐减至 20 单位，护城河与时间自由度成倍扩张'
+            : '基准现实流向：点击右上角「开启认知觉醒干预」观察隐形漏损如何重构为长期复利';
+    } else {
+      hudMetricsEl.textContent =
+        mode === 'chaos'
+          ? 'Uncharted Rainstorm: fragmented expenses and hours fall aimlessly without causal conservation.'
+          : awakened
+            ? 'Intervention Active: entropy loss drops from 68u to 20u while durable moats and time sovereignty double.'
+            : 'Baseline Flow: activate Cognitive Intervention above to see hidden dissipation reroute into durable moats.';
+    }
+  }
+
   function resize() {
     const rect = canvas.parentElement.getBoundingClientRect();
     dpr = Math.min(window.devicePixelRatio || 1, 2);
-    width = rect.width;
+    width = Math.max(320, rect.width);
     height = Math.max(620, rect.height);
     canvas.width = Math.floor(width * dpr);
     canvas.height = Math.floor(height * dpr);
@@ -39,9 +59,9 @@ export function initValueLoom(canvas, hudMetricsEl) {
   }
 
   function computeLayout() {
-    const padX = Math.max(76, width * 0.09);
+    const padX = Math.max(78, width * 0.09);
     const topY = 92;
-    const bottomY = height - 88;
+    const bottomY = height - 92;
     const usableH = bottomY - topY;
     const colXs = [padX, width * 0.5, width - padX];
 
@@ -117,7 +137,6 @@ export function initValueLoom(canvas, hudMetricsEl) {
 
   function draw() {
     t += 0.016;
-    // Smoothly interpolate flow weights toward targetLinks (Baseline vs Awakened)
     for (let i = 0; i < currentLinks.length; i++) {
       currentLinks[i].value += (targetLinks[i].value - currentLinks[i].value) * 0.07;
     }
@@ -125,8 +144,16 @@ export function initValueLoom(canvas, hudMetricsEl) {
     ctx.clearRect(0, 0, width, height);
     const { nodeRects, ribbonPaths } = computeLayout();
 
+    const titleFont =
+      currentLang === 'zh'
+        ? '600 18px "Noto Serif SC", "Songti SC", serif'
+        : '600 20px "Cormorant Garamond", Georgia, serif';
+    const subFont =
+      currentLang === 'zh'
+        ? '400 11.5px "Noto Serif SC", "Songti SC", serif'
+        : '400 11px "Cormorant Garamond", Georgia, serif';
+
     if (mode === 'chaos') {
-      // Chaotic resource rainstorm: unreadable noise droplets falling endlessly
       droplets.forEach((d) => {
         d.rainY += d.rainVy;
         d.rainX += Math.sin(t * 1.4 + d.idx) * 0.0008;
@@ -147,14 +174,25 @@ export function initValueLoom(canvas, hudMetricsEl) {
 
       ctx.save();
       ctx.textAlign = 'center';
-      ctx.fillStyle = 'rgba(244,239,230,0.82)';
-      ctx.font = '600 20px "Cormorant Garamond", serif';
-      ctx.fillText('UNCHARTED ENTROPY STREAM', width * 0.5, height * 0.48);
+      ctx.fillStyle = 'rgba(244,239,230,0.86)';
+      ctx.font = titleFont;
+      ctx.fillText(
+        currentLang === 'zh' ? '混沌耗散雨幕' : 'UNCHARTED ENTROPY STREAM',
+        width * 0.5,
+        height * 0.47
+      );
       ctx.fillStyle = '#E05A47';
-      ctx.font = '11px "JetBrains Mono", monospace';
-      ctx.fillText('数百笔开销与时间碎片如暴雨般坠落，无法看出因果流向', width * 0.5, height * 0.53);
+      ctx.font = subFont;
+      ctx.fillText(
+        currentLang === 'zh'
+          ? '数百笔开销与时间碎片如暴雨般坠落，无法看出因果流向'
+          : 'Hundreds of untracked expenditures and hours vanish without conserved routing',
+        width * 0.5,
+        height * 0.53
+      );
       ctx.restore();
 
+      drawCanvasWatermark(ctx, width, height, currentLang, 82);
       requestAnimationFrame(draw);
       return;
     }
@@ -180,7 +218,6 @@ export function initValueLoom(canvas, hudMetricsEl) {
       ctx.globalAlpha = isHighlighted ? (hoveredNodeId ? 0.34 : 0.17) : 0.04;
       ctx.fill();
 
-      // Delicate silk hairline edge
       ctx.beginPath();
       ctx.moveTo(r.x0, (r.sy0 + r.sy1) * 0.5);
       ctx.bezierCurveTo(cx, (r.sy0 + r.sy1) * 0.5, cx, (r.dy0 + r.dy1) * 0.5, r.x1, (r.dy0 + r.dy1) * 0.5);
@@ -191,13 +228,11 @@ export function initValueLoom(canvas, hudMetricsEl) {
       ctx.restore();
     });
 
-    // Update & draw flowing luminescent energy droplets along ribbons
     const totalVal = ribbonPaths.reduce((s, r) => s + r.value, 0);
     droplets.forEach((d) => {
       d.progress += d.speed;
       if (d.progress > 1) {
         d.progress -= 1;
-        // Pick ribbon proportional to current flow weight
         let targetW = ((d.idx * 97 + Math.floor(t * 10)) % 1000) / 1000 * totalVal;
         let chosen = 0;
         for (let i = 0; i < ribbonPaths.length; i++) {
@@ -226,7 +261,7 @@ export function initValueLoom(canvas, hudMetricsEl) {
     });
     ctx.globalAlpha = 1;
 
-    // Draw Architectural Node Pillars & Labels
+    // Draw Architectural Node Pillars & Pure-Language Labels
     Object.values(nodeRects).forEach((n) => {
       const isActive = !hoveredNodeId || hoveredNodeId === n.id;
       ctx.save();
@@ -238,18 +273,26 @@ export function initValueLoom(canvas, hudMetricsEl) {
       ctx.strokeRect(n.x - 4, n.y, 8, n.h);
 
       const alignRight = n.col === 2;
-      const alignCenter = n.col === 1;
-      const textX = alignRight ? n.x - 14 : alignCenter ? n.x + 14 : n.x + 14;
+      const textX = alignRight ? n.x - 14 : n.x + 14;
       ctx.textAlign = alignRight ? 'right' : 'left';
       ctx.fillStyle = '#F4EFE6';
-      ctx.font = '600 13px "Noto Serif SC", serif';
-      ctx.fillText(n.label, textX, n.y + n.h * 0.5 - 4);
-      ctx.fillStyle = 'rgba(244,239,230,0.56)';
-      ctx.font = '10px "JetBrains Mono", monospace';
-      ctx.fillText(`${n.en} · ${Math.round(n.total)}u`, textX, n.y + n.h * 0.5 + 12);
+      ctx.font =
+        currentLang === 'zh'
+          ? '600 13px "Noto Serif SC", "Songti SC", serif'
+          : '600 13.5px "Cormorant Garamond", Georgia, serif';
+      ctx.fillText(n.label[currentLang], textX, n.y + n.h * 0.5 - 5);
+
+      ctx.fillStyle = 'rgba(244,239,230,0.58)';
+      ctx.font =
+        currentLang === 'zh'
+          ? '400 10.5px "Noto Serif SC", serif'
+          : '500 10px "Cormorant Garamond", Georgia, serif';
+      const unitLabel = currentLang === 'zh' ? `${Math.round(n.total)} 单位` : `${Math.round(n.total)} UNITS`;
+      ctx.fillText(`${n.sub[currentLang]} · ${unitLabel}`, textX, n.y + n.h * 0.5 + 12);
       ctx.restore();
     });
 
+    drawCanvasWatermark(ctx, width, height, currentLang, 82);
     requestAnimationFrame(draw);
   }
 
@@ -264,44 +307,46 @@ export function initValueLoom(canvas, hudMetricsEl) {
     const { nodeRects } = computeLayout();
     let hit = null;
     for (const n of Object.values(nodeRects)) {
-      if (Math.abs(mx - n.x) < 95 && my >= n.y - 6 && my <= n.y + n.h + 6) {
+      if (Math.abs(mx - n.x) < 105 && my >= n.y - 6 && my <= n.y + n.h + 6) {
         hit = n;
         break;
       }
     }
     hoveredNodeId = hit ? hit.id : null;
     if (hit && hudMetricsEl) {
-      hudMetricsEl.innerHTML = `<strong>${hit.label} (${hit.en})</strong> — 当前总流量 ${Math.round(hit.total)} 能量单位`;
+      if (currentLang === 'zh') {
+        hudMetricsEl.innerHTML = `<strong>${hit.label.zh}（${hit.sub.zh}）</strong> —— 当前总流量 ${Math.round(hit.total)} 能量单位`;
+      } else {
+        hudMetricsEl.innerHTML = `<strong>${hit.label.en} (${hit.sub.en})</strong> — Active Throughput ${Math.round(hit.total)} Energy Units`;
+      }
     }
   });
 
   canvas.addEventListener('mouseleave', () => {
     hoveredNodeId = null;
+    updateHudDefault();
   });
 
+  updateHudDefault();
   requestAnimationFrame(draw);
 
   return {
     setMode(nextMode) {
       mode = nextMode;
-      if (hudMetricsEl) {
-        hudMetricsEl.textContent =
-          nextMode === 'order'
-            ? awakened
-              ? '认知觉醒干预已激活：34% 隐形内耗已重构为「深度学习」与「时间自由度净值」'
-              : '基准现实流向：点击右上角「认知觉醒干预」观察资源流向如何剧变'
-            : '混沌雨幕：没有流向结构的账单，让人根本找不到真正的价值漏斗';
-      }
+      updateHudDefault();
     },
     toggleIntervention() {
       awakened = !awakened;
       targetLinks = awakened ? VALUE_FLOW_MODEL.awakenedLinks : VALUE_FLOW_MODEL.baselineLinks;
-      if (hudMetricsEl) {
-        hudMetricsEl.textContent = awakened
-          ? '认知觉醒干预已开启：隐形熵增损耗从 68u 锐减至 20u，长期护城河与自由度翻倍扩张'
-          : '已切换回基准现实流向（存在明显的情绪内耗与隐形订阅漏损）';
-      }
+      updateHudDefault();
       return awakened;
+    },
+    isAwakened() {
+      return awakened;
+    },
+    setLang(newLang) {
+      currentLang = newLang;
+      updateHudDefault();
     },
   };
 }

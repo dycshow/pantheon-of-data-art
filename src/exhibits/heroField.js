@@ -1,12 +1,29 @@
 // Hero Atrium: 1,500-particle Living Entropy-to-Cosmos Canvas2D Physics Engine
+import { drawCanvasWatermark } from './watermarkHelper.js';
 
-export function initHeroField(canvas) {
+const SHAPE_LABELS = {
+  zh: {
+    chaos: '当前形态：零一 · 混沌星云（原始熵流）',
+    astrolabe: '当前形态：零二 · 天体星盘（同心秩序）',
+    phyllotaxis: '当前形态：零三 · 斐波那契螺旋（自然律动）',
+    harmonic: '当前形态：零四 · 谐振波矩阵（结构平衡）',
+  },
+  en: {
+    chaos: 'MORPHOLOGY: 01 · RAW NEBULA (ENTROPY)',
+    astrolabe: 'MORPHOLOGY: 02 · CELESTIAL ASTROLABE',
+    phyllotaxis: 'MORPHOLOGY: 03 · FIBONACCI PHYLLOTAXIS',
+    harmonic: 'MORPHOLOGY: 04 · HARMONIC MATRIX',
+  },
+};
+
+export function initHeroField(canvas, langInit = 'zh') {
   const ctx = canvas.getContext('2d');
   const COUNT = 1500;
-  let width = 0;
-  let height = 0;
+  let width = 1200;
+  let height = 760;
   let dpr = 1;
   let currentShape = 'astrolabe';
+  let currentLang = langInit;
   let time = 0;
   let mouse = { x: -9999, y: -9999, active: false };
 
@@ -17,12 +34,10 @@ export function initHeroField(canvas) {
     const rad = Math.random() * 0.45 + 0.05;
     return {
       idx: i,
-      x: (Math.random() - 0.5) * 1400,
-      y: (Math.random() - 0.5) * 900,
+      x: 0,
+      y: 0,
       vx: (Math.random() - 0.5) * 2.2,
       vy: (Math.random() - 0.5) * 2.2,
-      tx: 0,
-      ty: 0,
       seedAngle: angle,
       seedRad: rad,
       size: i % 17 === 0 ? 2.4 : i % 5 === 0 ? 1.6 : 1.1,
@@ -31,11 +46,18 @@ export function initHeroField(canvas) {
     };
   });
 
+  function updateReadout() {
+    const el = document.getElementById('hero-entropy-val');
+    if (el) {
+      el.textContent = SHAPE_LABELS[currentLang]?.[currentShape] || '';
+    }
+  }
+
   function resize() {
     const rect = canvas.parentElement.getBoundingClientRect();
     dpr = Math.min(window.devicePixelRatio || 1, 2);
-    width = rect.width;
-    height = rect.height;
+    width = Math.max(320, rect.width);
+    height = Math.max(480, rect.height);
     canvas.width = Math.floor(width * dpr);
     canvas.height = Math.floor(height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -97,7 +119,6 @@ export function initHeroField(canvas) {
     ctx.fillStyle = 'rgba(7, 7, 9, 0.24)';
     ctx.fillRect(0, 0, width, height);
 
-    // Subtle astrolabe guide circles in cosmos modes
     if (currentShape === 'astrolabe') {
       const cx = width * 0.5;
       const cy = height * 0.48;
@@ -144,6 +165,8 @@ export function initHeroField(canvas) {
       ctx.fill();
     }
     ctx.globalAlpha = 1;
+
+    drawCanvasWatermark(ctx, width, height, currentLang, 22);
     requestAnimationFrame(frame);
   }
 
@@ -159,17 +182,26 @@ export function initHeroField(canvas) {
     mouse.active = false;
   });
 
-  // Initialize particle coordinates centered so initial paint isn't offscreen
   particles.forEach((p) => {
     p.x = width * 0.5 + (Math.random() - 0.5) * width * 0.7;
     p.y = height * 0.48 + (Math.random() - 0.5) * height * 0.7;
   });
 
+  updateReadout();
   requestAnimationFrame(frame);
 
   return {
     setShape(shape) {
       currentShape = shape;
+      updateReadout();
+    },
+    setMode(shape) {
+      currentShape = shape;
+      updateReadout();
+    },
+    setLang(newLang) {
+      currentLang = newLang;
+      updateReadout();
     },
   };
 }
