@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <script type="module" crossorigin src="./assets/index-CjEMVuSw.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index--JgZzZo1.css">
+  <script type="module" crossorigin src="./assets/index-B9cWo8pQ.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-B68JYdH_.css">
 </head>
 <body>
   <!-- Museum Top Navigation Rail -->
@@ -32,6 +32,10 @@
         <button type="button" id="lang-zh-btn" class="lang-btn active" data-lang="zh">中文</button>
         <button type="button" id="lang-en-btn" class="lang-btn" data-lang="en">EN</button>
       </div>
+      <button type="button" id="btn-audio-tour" class="audio-tour-header-btn">
+        <span class="audio-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span id="audio-tour-label" data-i18n="navAudioTour">全馆语音导览</span>
+      </button>
       <button type="button" id="global-entropy-btn" class="global-toggle-btn">
         <span class="pulse-dot"></span>
         <span id="global-mode-label">全局秩序态 · 万象归序</span>
@@ -96,6 +100,11 @@
           <span class="mono-tag" data-i18n="prologueTag">策展人手记</span>
           <h2 id="prologue-heading" data-i18n="prologueHeading">为什么我们要建造一座<br />“数据可视化的艺术殿堂”？</h2>
           <p class="curator-signature" data-i18n="prologueSig">—— DYCSHOW · 策展手记</p>
+          <button type="button" class="audio-guide-btn prologue-audio-btn" data-audio-id="00-prologue" data-label-key="audioListenPrologue">
+            <span class="audio-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="audio-btn-text" data-i18n="audioListenPrologue">聆听策展宣言解说</span>
+            <span class="audio-btn-time"></span>
+          </button>
         </div>
         <div class="prologue-right">
           <p data-i18n-html="prologueP1">
@@ -115,6 +124,11 @@
           <div class="hall-eyebrow">
             <span class="mono-tag" data-i18n="hall1Tag">第一展厅 · 第一馆藏版画</span>
             <span class="tech-tag" data-i18n="hall1Tech">命题一 · 时间秩序与心流节律</span>
+            <button type="button" class="audio-guide-btn" data-audio-id="01-chronos" data-label-key="audioListenHall">
+              <span class="audio-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="audio-btn-text" data-i18n="audioListenHall">聆听本厅策展解说</span>
+              <span class="audio-btn-time"></span>
+            </button>
           </div>
           <h2 class="hall-title" data-i18n="hall1Title">岁月的年轮</h2>
           <p class="hall-lead" data-i18n="hall1Lead">
@@ -176,6 +190,11 @@
           <div class="hall-eyebrow">
             <span class="mono-tag" data-i18n="hall2Tag">第二展厅 · 第二馆藏版画</span>
             <span class="tech-tag" data-i18n="hall2Tech">命题二 · 能量守恒与认知复利</span>
+            <button type="button" class="audio-guide-btn" data-audio-id="02-flux" data-label-key="audioListenHall">
+              <span class="audio-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="audio-btn-text" data-i18n="audioListenHall">聆听本厅策展解说</span>
+              <span class="audio-btn-time"></span>
+            </button>
           </div>
           <h2 class="hall-title" data-i18n="hall2Title">价值的河床</h2>
           <p class="hall-lead" data-i18n="hall2Lead">
@@ -231,6 +250,11 @@
           <div class="hall-eyebrow">
             <span class="mono-tag" data-i18n="hall3Tag">第三展厅 · 第三馆藏版画</span>
             <span class="tech-tag" data-i18n="hall3Tech">命题三 · 万物耦合与系统解构</span>
+            <button type="button" class="audio-guide-btn" data-audio-id="03-constellation" data-label-key="audioListenHall">
+              <span class="audio-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="audio-btn-text" data-i18n="audioListenHall">聆听本厅策展解说</span>
+              <span class="audio-btn-time"></span>
+            </button>
           </div>
           <h2 class="hall-title" data-i18n="hall3Title">万物的星图</h2>
           <p class="hall-lead" data-i18n="hall3Lead">
@@ -283,6 +307,11 @@
           <div class="hall-eyebrow">
             <span class="mono-tag" data-i18n="hall4Tag">第四展厅 · 第四馆藏版画</span>
             <span class="tech-tag" data-i18n="hall4Tech">命题四 · 均值幻象与个体尊严</span>
+            <button type="button" class="audio-guide-btn" data-audio-id="04-prism" data-label-key="audioListenHall">
+              <span class="audio-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="audio-btn-text" data-i18n="audioListenHall">聆听本厅策展解说</span>
+              <span class="audio-btn-time"></span>
+            </button>
           </div>
           <h2 class="hall-title" data-i18n="hall4Title">真相的棱镜</h2>
           <p class="hall-lead" data-i18n="hall4Lead">
@@ -339,6 +368,11 @@
         <div class="hall-header centered">
           <div class="hall-eyebrow">
             <span class="mono-tag" data-i18n="hall5Tag">第五展厅 · 策展哲思与馆藏版画</span>
+            <button type="button" class="audio-guide-btn" data-audio-id="05-sanctuary" data-label-key="audioListenHall">
+              <span class="audio-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="audio-btn-text" data-i18n="audioListenHall">聆听本厅策展解说</span>
+              <span class="audio-btn-time"></span>
+            </button>
           </div>
           <h2 class="hall-title" data-i18n="hall5Title">秩序的信仰</h2>
           <p class="hall-lead centered-lead" data-i18n="hall5Lead">
@@ -443,6 +477,33 @@
       <div class="mono-tag" data-i18n="footerRight">原创视觉与代码版权归属 DYCSHOW · 献给 AI 时代的人类视觉素养</div>
     </div>
   </footer>
+
+  <!-- Floating Curatorial Audio Guide Dock -->
+  <aside id="audio-guide-dock" class="audio-guide-dock" aria-hidden="true" aria-label="Curatorial Audio Player">
+    <div class="audio-dock-info">
+      <div class="audio-dock-title-row">
+        <span class="audio-eq" id="audio-dock-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span id="audio-dock-title" class="audio-dock-title">序厅 · 万象归序策展宣言</span>
+      </div>
+      <div id="audio-dock-voice" class="audio-dock-voice" data-i18n="audioVoiceBadge">策展人声像 · 白桦（低男声）</div>
+    </div>
+
+    <div class="audio-dock-controls">
+      <button type="button" id="audio-dock-prev" class="audio-dock-icon-btn" title="上一展厅">⏮</button>
+      <button type="button" id="audio-dock-toggle" class="audio-dock-play-btn" data-i18n="audioBtnPause">暂停</button>
+      <button type="button" id="audio-dock-next" class="audio-dock-icon-btn" title="下一展厅">⏭</button>
+    </div>
+
+    <div class="audio-dock-progress-wrap">
+      <input type="range" id="audio-dock-seek" class="audio-dock-seek" min="0" max="100" step="0.1" value="0" aria-label="Audio Seek" />
+      <span id="audio-dock-time" class="audio-dock-time">00:00 / 00:00</span>
+    </div>
+
+    <div class="audio-dock-right">
+      <button type="button" id="audio-dock-autotour" class="audio-dock-mode-btn active" data-i18n="audioAutoTourOn">联播巡礼：开启</button>
+      <button type="button" id="audio-dock-close" class="audio-dock-close-btn" aria-label="Close">✕</button>
+    </div>
+  </aside>
 
   <!-- Fullscreen Protected Artwork Lightbox -->
   <div id="art-lightbox" class="art-lightbox" aria-hidden="true">
