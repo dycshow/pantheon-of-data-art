@@ -25,7 +25,7 @@ export const CHRONOS_CATEGORIES = {
   },
   ai: {
     color: '#3B8EA5',
-    name: { zh: '智能协同杠杆', en: 'AI Leverage' },
+    name: { zh: 'AI 协同杠杆', en: 'AI Leverage' },
   },
   frag: {
     color: '#E05A47',
@@ -99,7 +99,7 @@ export const VALUE_FLOW_MODEL = {
     // Col 0: Sources
     { id: 'src_time', col: 0, label: { zh: '主动时间与专注力', en: 'Active Focus Hours' }, sub: { zh: '原初生命投入', en: 'TIME INPUT' }, color: '#D4AF37' },
     { id: 'src_capital', col: 0, label: { zh: '现金流与既有积蓄', en: 'Capital Base' }, sub: { zh: '经济资源投入', en: 'CAPITAL' }, color: '#3B8EA5' },
-    { id: 'src_ai', col: 0, label: { zh: '智能协同杠杆', en: 'AI Leverage' }, sub: { zh: '工具倍率放大', en: 'AMPLIFIER' }, color: '#8ad6ea' },
+    { id: 'src_ai', col: 0, label: { zh: 'AI 协同杠杆', en: 'AI Leverage' }, sub: { zh: '工具倍率放大', en: 'AMPLIFIER' }, color: '#8ad6ea' },
     // Col 1: Channels
     { id: 'ch_compounding', col: 1, label: { zh: '深度学习与复用资产', en: 'Compounding Craft' }, sub: { zh: '正反馈积累', en: 'DURABLE' }, color: '#D4AF37' },
     { id: 'ch_vitality', col: 1, label: { zh: '核心关系与身心修复', en: 'Vitality & Trust' }, sub: { zh: '能量涵养', en: 'RECOVERY' }, color: '#3B8EA5' },
@@ -271,11 +271,11 @@ export const SCENARIO_ECOSYSTEM_NODES = [
     id: 'root.scenarios.ai_literacy',
     group: 'scenarios',
     targets: ['root.engines.vega_lite', 'root.engines.observable_plot', 'root.engines.d3'],
-    name: { zh: '自动生成图表的真相甄别', en: 'Truth Auditing for AI Charts' },
+    name: { zh: 'AI 生成图表的真相甄别', en: 'Truth Auditing for AI Charts' },
     domain: { zh: '认知教育 · 视觉素养', en: 'Cognitive Craft · Literacy' },
     pain: {
-      zh: '现代模型能瞬间输出看似严谨的统计报表，却常借截断纵轴或掩藏双峰分布误导判断。',
-      en: 'Automated assistants output polished bar charts in seconds while concealing skewed variances and truncated axes.',
+      zh: 'AI 能在数秒内生成看似严谨的统计图表，却常因单一均值、截断纵轴或掩藏双峰分布而误导判断。',
+      en: 'AI can generate polished statistical charts in seconds, yet often misleads perception through standalone means, truncated axes, or hidden bimodal splits.',
     },
     solution: {
       zh: '用声明式图形语法对同一数据集并列呈现均值、蜂群分布与权衡散点，直观戳破均值幻觉。',
@@ -534,7 +534,7 @@ export const SCENARIO_ECOSYSTEM_NODES = [
       en: 'Commercial closed map styles clash with dark museum obsidian palettes and impose restrictive quotas.',
     },
     solution: {
-      zh: '完全开放自主可控的矢量瓦片引擎，可深度定制定制暗金建筑线条并与地理流层无缝叠加。',
+      zh: '完全开放自主可控的矢量瓦片引擎，可深度定制暗金建筑线条并与地理流层无缝叠加。',
       en: 'Open vector tile engine supporting bespoke obsidian architectural basemaps under spatial flow layers.',
     },
     antiPattern: {
@@ -586,18 +586,18 @@ export const PRISM_ARCHETYPES = [
   { key: 'high_burn', color: '#E05A47', label: { zh: '传统高压赛道', en: 'High-Burn Track' } },
   { key: 'steady_drift', color: '#8C92A4', label: { zh: '惯性舒适区', en: 'Steady Drift' } },
   { key: 'indie_craft', color: '#3B8EA5', label: { zh: '独立数字工匠', en: 'Indie Craftsperson' } },
-  { key: 'ai_leveraged', color: '#D4AF37', label: { zh: '智能协同杠杆者', en: 'AI-Leveraged Pioneer' } },
+  { key: 'ai_leveraged', color: '#D4AF37', label: { zh: 'AI 协同探索者', en: 'AI-Leveraged Pioneer' } },
 ];
 
 export const PRISM_STAGE_ESSAYS = {
   chaos: {
     zh: {
-      title: '零 · 未经编码的原始个体噪音',
-      desc: '一百二十位探索者的职业与生活决策杂乱堆叠，没有任何统计尺度，大脑只能看见一片无解的尘埃。',
+      title: '视角零 · 混沌原始散点',
+      desc: '120 位探索者的职业与生活决策杂乱堆叠，没有任何统计尺度，大脑只能看见一片无解的尘埃。',
       lesson: '没有视觉编码的数据只是噪声；但错误的视觉编码甚至比噪声更具误导性。',
     },
     en: {
-      title: '0 · Unencoded Raw Individual Noise',
+      title: 'View 0 · Unencoded Raw Scatter',
       desc: 'One hundred twenty real career and life specimens scatter across space with no scale or reference—leaving perception lost in raw dust.',
       lesson: 'Unencoded telemetry is noise; misleadingly encoded charts are even more dangerous.',
     },
@@ -605,47 +605,47 @@ export const PRISM_STAGE_ESSAYS = {
   bar: {
     zh: {
       title: '视角甲 · 平均值的谎言',
-      desc: '柱状图冷冰冰地告诉你：四类赛道的「综合均值」几乎都在五十至六十五分之间相差无几！这是自动报表最常制造的盲区——它抹平了一切极端代价与内部分化。',
+      desc: '柱状图冷冰冰地告诉你：四类赛道的「综合均值」几乎都在 50 至 65 分之间相差无几！这是 AI 生成图表最常制造的盲区——它抹平了一切极端代价与内部分化。',
       lesson: '只要看见只给平均值的柱状图，请立刻追问：它的方差、双峰分化与尾部代价是什么？',
     },
     en: {
-      title: 'View A · The Tyranny of the Mean',
-      desc: 'Cold summary bars claim all four life tracks share virtually identical composite averages (50–65). Automated charts love this illusion—erasing hidden divergence and anxiety cost.',
+      title: 'View A · The Lie of Averages',
+      desc: 'Cold summary bars claim all four life tracks share virtually identical composite averages (50–65). AI-generated summary charts love this illusion—erasing hidden divergence and anxiety cost.',
       lesson: 'Whenever you are handed a standalone average bar, ask immediately for variance, bimodality, and hidden trade-offs.',
     },
   },
   beeswarm: {
     zh: {
-      title: '视角乙 · 个体颗粒度回归',
-      desc: '把柱状图打散成一百二十个真实个体，惊人真相瞬间浮现：「独立数字工匠」内部呈现明显的双峰撕裂，而「传统高压赛道」则向低自由区密集挤压。',
+      title: '视角乙 · 个体蜂群分布',
+      desc: '把柱状图打散成 120 个真实个体，惊人真相瞬间浮现：「独立数字工匠」内部呈现明显的双峰撕裂，而「传统高压赛道」则向低自由区密集挤压。',
       lesson: '蜂群分布图既保留了整体分布形态，又让每一个真实个体都不被冷冰冰地“平均”掉。',
     },
     en: {
-      title: 'View B · Restoring Individual Granularity',
+      title: 'View B · Individual Force Beeswarm',
       desc: 'Breaking bars back into 120 individual specimens exposes startling truth: Indie Craftspeople split along a sharp bimodal chasm while High-Burn workers cluster tightly toward low time freedom.',
       lesson: 'Force beeswarms preserve overall distribution density without erasing a single individual specimen.',
     },
   },
   scatter: {
     zh: {
-      title: '视角丙 · 时间自由与焦虑前沿',
-      desc: '横轴是「时间自由度」，纵轴是「长期焦虑指数」。表面回报优渥却高压的赛道往往扎堆于高焦虑区，而善用智能协同的探索者正稳定挺进右下角帕累托最优前沿。',
+      title: '视角丙 · 自由与焦虑前沿',
+      desc: '横轴是「时间自由度」，纵轴是「长期焦虑指数」。表面回报优渥却高压的赛道往往扎堆于高焦虑区，而善用 AI 协同杠杆的探索者正稳定挺进右下角帕累托最优前沿。',
       lesson: '二维权衡散点图一眼揭示结构性取舍，打破单维度数字攀比。',
     },
     en: {
-      title: 'View C · The Freedom vs. Anxiety Frontier',
+      title: 'View C · Freedom vs. Anxiety Frontier',
       desc: 'Plotting Time Sovereignty (X) against Chronic Anxiety (Y) uncovers hidden trade-offs: traditional intensity bunches high on distress while AI-leveraged pioneers push toward the calm Pareto frontier.',
       lesson: 'Relational scatter plots expose hidden opportunity costs masked by single-score leaderboards.',
     },
   },
   glyphs: {
     zh: {
-      title: '视角丁 · 数据人文主义繁花',
+      title: '视角丁 · 数据人文繁花',
       desc: '每朵几何花完整编码一个真实个体的五维生命质感（创造力、财务、自由度、韧性、十年复利）。当数据拒绝被粗暴压缩成单一均值，每个人的立体质地就能被尊严地看见。',
       lesson: '最高级的数据可视化不只是算术压缩，而是以几何仪式感归还生命本身的尊严与秩序之美。',
     },
     en: {
-      title: 'View D · Five-Petal Botanical Humanism',
+      title: 'View D · Botanical Humanism Glyphs',
       desc: 'Each geometric blossom encodes one human life across five dimensions: Creativity, Financial Yield, Sovereignty, Resilience, and 10-Year Compounding. Complexity is preserved with dignity rather than flattened.',
       lesson: 'The highest visual art does not merely accelerate arithmetic—it honors human nuance and beauty.',
     },
@@ -663,7 +663,7 @@ export function generateDecisionCohort() {
     },
     {
       key: 'ai_leveraged',
-      label: { zh: '智能协同杠杆者', en: 'AI-Leveraged Pioneer' },
+      label: { zh: 'AI 协同探索者', en: 'AI-Leveraged Pioneer' },
       color: '#D4AF37',
       base: { creativity: 86, financial: 79, freedom: 84, resilience: 78, compounding: 90 },
     },
@@ -675,7 +675,7 @@ export function generateDecisionCohort() {
     },
     {
       key: 'steady_drift',
-      label: { zh: '惯性舒适区漂流', en: 'Steady Drift' },
+      label: { zh: '惯性舒适区', en: 'Steady Drift' },
       color: '#8C92A4',
       base: { creativity: 42, financial: 54, freedom: 51, resilience: 44, compounding: 32 },
     },

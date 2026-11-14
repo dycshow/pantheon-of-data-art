@@ -7,6 +7,7 @@ import {
   PRISM_STAGE_ESSAYS,
   generateDecisionCohort,
 } from '../data/curatedData.js';
+import { I18N } from '../i18n.js';
 
 export function initTruthPrism(hostEl, els, langInit = 'zh') {
   const cohort = generateDecisionCohort();
@@ -190,11 +191,8 @@ export function initTruthPrism(hostEl, els, langInit = 'zh') {
 
   function updateHudDefault() {
     if (!els.hudMetrics) return;
-    if (currentLang === 'zh') {
-      els.hudMetrics.textContent = '当前视窗：一百二十个真实样本正在以多维几何形态并置呈现';
-    } else {
-      els.hudMetrics.textContent = 'Active Viewport: 120 human decision specimens mapped across multi-dimensional visual encodings.';
-    }
+    const dict = I18N[currentLang] || I18N.zh;
+    els.hudMetrics.textContent = dict.prismHudDefault;
   }
 
   specimenGroups

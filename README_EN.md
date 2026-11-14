@@ -32,7 +32,7 @@
 <a id="section-manifesto"></a>
 ## Curatorial Manifesto
 
-> **In an era where algorithms can generate endless spreadsheets and charts in three seconds, the rarest human capability is no longer computation—it is the visual literacy to discern structure, nuance, and order beneath noisy reality.**
+> **In an era where AI generates endless charts in three seconds, the rarest human capability is no longer tooling—it is the visual literacy to discern structure, order, and truth beneath a chaotic world.**
 
 Most data tools stop at flattening human stories into interchangeable bar charts and corporate pies. Yet lived reality is never a clean spreadsheet—it is **365 fragmented days, silent leaks of time and capital, entangled causal systems, and individual dignity erased by statistical averages**.
 
@@ -55,7 +55,7 @@ Every interactive installation inside this sanctuary transforms smoothly in real
 | **Hall I · Chronos Astrolabe** | 365 days and 8,760 hours of fragmented attention vs. deep creative cadence | **Polar Radial Rose + Spring Physics**: Collapses drifting daily fragments into an astronomical dial with contiguous golden focus arcs and dimension filtering |
 | **Hall II · The Loom of Value** | Where personal time, energy, and capital silently leak away vs. compound into moats | **Conserved Alluvial Tapestry + Luminescent Particles**: Reroutes unmapped rain into causal ribbons; activate Cognitive Intervention to witness lost flow return to sovereignty |
 | **Hall III · Constellation of Order** | Systemic fragility across codebases, supply chains, and visual toolkits | **360° Hierarchical Edge Bundling**: Replaces unreadable network hairballs with curved orbital constellations—click any node to inspect scenarios and pitfalls |
-| **Hall IV · The Prism of Truth** | Exposing how automated summary averages conceal polarized human realities | **Five-Stage Visual Morphing**: Seamlessly morphs 120 real specimens across Raw Scatter, Bar Averages, Force Beeswarm, Trade-off Frontier, and Five-Petal Botanical Glyphs |
+| **Hall IV · The Prism of Truth** | Seeing through AI-generated summary averages to restore individual human dignity | **Five-Stage Visual Morphing**: Seamlessly morphs 120 real specimens across Raw Scatter, Bar Averages, Force Beeswarm, Trade-off Frontier, and Five-Petal Botanical Glyphs |
 
 ---
 

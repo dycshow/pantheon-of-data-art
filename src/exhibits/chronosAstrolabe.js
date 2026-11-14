@@ -6,6 +6,7 @@ import {
   CHRONOS_MONTHS,
   generateChronosYearData,
 } from '../data/curatedData.js';
+import { I18N } from '../i18n.js';
 import { drawCanvasWatermark } from './watermarkHelper.js';
 
 export function initChronosAstrolabe(canvas, hudMetricsEl, langInit = 'zh') {
@@ -43,17 +44,8 @@ export function initChronosAstrolabe(canvas, hudMetricsEl, langInit = 'zh') {
 
   function updateHudDefault() {
     if (!hudMetricsEl) return;
-    if (currentLang === 'zh') {
-      hudMetricsEl.textContent =
-        mode === 'order'
-          ? '全年三百六十五天轨迹已归序：黄金弧线串联连续专注周期，赤红尖刺显影碎片打断源'
-          : '混沌原貌：八千七百六十小时散作无序漂浮尘埃，你无法看清到底是什么消耗了精力';
-    } else {
-      hudMetricsEl.textContent =
-        mode === 'order'
-          ? '365 days aligned radially: golden arcs trace sustained deep-focus streaks; vermilion spikes expose attention leaks.'
-          : 'Raw Entropy: 8,760 hours drift as unindexed dust—impossible to diagnose what actually drains your vitality.';
-    }
+    const dict = I18N[currentLang] || I18N.zh;
+    hudMetricsEl.textContent = mode === 'order' ? dict.chronosHudOrder : dict.chronosHudChaos;
   }
 
   function resize() {
@@ -300,7 +292,7 @@ export function initChronosAstrolabe(canvas, hudMetricsEl, langInit = 'zh') {
       const dateStr = best.dateLabel[currentLang];
       if (currentLang === 'zh') {
         hudMetricsEl.innerHTML =
-          `<strong>${dateStr}</strong> —— 深度创造 ${best.deepHours} 小时 · 协同杠杆 ${best.aiHours} 小时 · 碎片打断 ${best.fragHours} 小时 · 主导状态：${catName}` +
+          `<strong>${dateStr}</strong> —— 深度创造 ${best.deepHours} 小时 · AI 协同杠杆 ${best.aiHours} 小时 · 碎片打断 ${best.fragHours} 小时 · 主导状态：${catName}` +
           (best.streakLen >= 3 ? ` · 连续心流第 ${best.streakLen} 天` : '');
       } else {
         hudMetricsEl.innerHTML =

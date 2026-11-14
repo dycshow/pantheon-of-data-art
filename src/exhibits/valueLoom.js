@@ -1,6 +1,7 @@
 // Hall II: The Loom of Value
 // Multi-stage Cubic-Bezier Alluvial Loom + 560 flowing luminescent particles
 import { VALUE_FLOW_MODEL } from '../data/curatedData.js';
+import { I18N } from '../i18n.js';
 import { drawCanvasWatermark } from './watermarkHelper.js';
 
 export function initValueLoom(canvas, hudMetricsEl, langInit = 'zh') {
@@ -31,21 +32,13 @@ export function initValueLoom(canvas, hudMetricsEl, langInit = 'zh') {
 
   function updateHudDefault() {
     if (!hudMetricsEl) return;
-    if (currentLang === 'zh') {
-      hudMetricsEl.textContent =
-        mode === 'chaos'
-          ? '混沌雨幕：没有流向结构的零散账单，让人根本找不到真正的价值漏斗'
-          : awakened
-            ? '认知觉醒干预已激活：隐形熵增损耗从 68 单位锐减至 20 单位，护城河与时间自由度成倍扩张'
-            : '基准现实流向：点击右上角「开启认知觉醒干预」观察隐形漏损如何重构为长期复利';
-    } else {
-      hudMetricsEl.textContent =
-        mode === 'chaos'
-          ? 'Uncharted Rainstorm: fragmented expenses and hours fall aimlessly without causal conservation.'
-          : awakened
-            ? 'Intervention Active: entropy loss drops from 68u to 20u while durable moats and time sovereignty double.'
-            : 'Baseline Flow: activate Cognitive Intervention above to see hidden dissipation reroute into durable moats.';
-    }
+    const dict = I18N[currentLang] || I18N.zh;
+    hudMetricsEl.textContent =
+      mode === 'chaos'
+        ? dict.fluxHudChaos
+        : awakened
+          ? dict.fluxHudAwakened
+          : dict.fluxHudBaseline;
   }
 
   function resize() {

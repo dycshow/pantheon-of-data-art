@@ -3,16 +3,16 @@ import { drawCanvasWatermark } from './watermarkHelper.js';
 
 const SHAPE_LABELS = {
   zh: {
-    chaos: '当前形态：零一 · 混沌星云（原始熵流）',
-    astrolabe: '当前形态：零二 · 天体星盘（同心秩序）',
-    phyllotaxis: '当前形态：零三 · 斐波那契螺旋（自然律动）',
-    harmonic: '当前形态：零四 · 谐振波矩阵（结构平衡）',
+    chaos: '当前形态：壹 · 混沌星云（原始熵流）',
+    astrolabe: '当前形态：贰 · 天体星盘（同心秩序）',
+    phyllotaxis: '当前形态：叁 · 斐波那契螺旋（自然律动）',
+    harmonic: '当前形态：肆 · 谐振波矩阵（结构平衡）',
   },
   en: {
-    chaos: 'MORPHOLOGY: 01 · RAW NEBULA (ENTROPY)',
-    astrolabe: 'MORPHOLOGY: 02 · CELESTIAL ASTROLABE',
-    phyllotaxis: 'MORPHOLOGY: 03 · FIBONACCI PHYLLOTAXIS',
-    harmonic: 'MORPHOLOGY: 04 · HARMONIC MATRIX',
+    chaos: 'ACTIVE MORPHOLOGY: 01 · RAW NEBULA (ENTROPY)',
+    astrolabe: 'ACTIVE MORPHOLOGY: 02 · CELESTIAL ASTROLABE',
+    phyllotaxis: 'ACTIVE MORPHOLOGY: 03 · FIBONACCI PHYLLOTAXIS',
+    harmonic: 'ACTIVE MORPHOLOGY: 04 · HARMONIC MATRIX',
   },
 };
 

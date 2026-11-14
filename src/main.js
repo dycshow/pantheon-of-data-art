@@ -95,12 +95,6 @@ function bootstrap() {
       el.textContent = currentLang === 'zh' ? cnNums[idx] : enNums[idx];
     });
 
-    document.querySelectorAll('[data-stat-num]').forEach((el) => {
-      const id = el.getAttribute('data-stat-num');
-      if (id === '1') el.textContent = currentLang === 'zh' ? '零肆' : '04';
-      if (id === '2') el.textContent = currentLang === 'zh' ? '零叁' : '03';
-    });
-
     // Update active lightbox caption if open
     const lightbox = document.getElementById('art-lightbox');
     const lightboxCaption = document.getElementById('lightbox-caption');

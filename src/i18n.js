@@ -19,16 +19,18 @@ export const I18N = {
     heroTitleMain: '万象归序',
     heroTitleSub: '数据可视化的艺术殿堂',
     heroSubtitle:
-      '在算法三秒即可生成海量报表的时代，人类最稀缺的不再是工具，而是“看见结构与秩序”的审美与洞察。这是一座致力于将生活与工作的繁杂无序，雕刻为直抵人心之视觉表达的艺术殿堂。',
-    shapeChaos: '一 · 混沌星云',
-    shapeAstrolabe: '二 · 天体星盘',
-    shapePhyllotaxis: '三 · 斐波那契螺旋',
-    shapeHarmonic: '四 · 谐振波矩阵',
+      '在 AI 三秒即可生成海量图表的时代，人类最稀缺的不再是工具，而是“看见结构与秩序”的审美与洞察。这是一座致力于将生活与工作的繁杂无序，雕刻为直抵人心之视觉表达的艺术殿堂。',
+    shapeChaos: '壹 · 混沌星云',
+    shapeAstrolabe: '贰 · 天体星盘',
+    shapePhyllotaxis: '叁 · 斐波那契螺旋',
+    shapeHarmonic: '肆 · 谐振波矩阵',
+    stat1Num: '肆座',
     stat1Label: '沉浸式交互展厅',
     stat1Sub: '从混沌推演至秩序',
+    stat2Num: '叁条',
     stat2Label: '视觉秩序核心定律',
     stat2Sub: '反平庸与人文尺度',
-    stat3Num: '四幅典藏',
+    stat3Num: '肆幅',
     stat3Label: '馆藏级秩序版画',
     stat3Sub: '黑曜石与金箔美学',
     enterMuseum: '步入第一展厅 ↓',
@@ -51,7 +53,7 @@ export const I18N = {
     btnOrder: '万象归序',
     filterAll: '全部维度',
     filterDeep: '深度创造',
-    filterAi: '智能协同杠杆',
+    filterAi: 'AI 协同杠杆',
     filterFrag: '碎片打断',
     filterRest: '身心修复',
     chronosHudLabel: '悬停星盘任意一日读取时间轨迹',
@@ -83,8 +85,8 @@ export const I18N = {
     interventionOff: '✦ 开启认知觉醒干预 · 系统重构',
     interventionOn: '✦ 已开启认知觉醒 · 恢复基准态',
     fluxHudLabel: '悬停任意河道节点追溯上下游流量',
-    fluxHudBaseline: '基准现实流向：点击右上角「认知觉醒干预」，观察隐形漏损如何重构为长期复利',
-    fluxHudAwakened: '认知觉醒已激活：隐形熵增损耗大幅收敛，长期护城河与时间自由度成倍扩张',
+    fluxHudBaseline: '基准现实流向：点击右上角「开启认知觉醒干预」，观察隐形漏损如何重构为长期复利',
+    fluxHudAwakened: '认知觉醒干预已激活：隐形熵增损耗从 68 单位锐减至 20 单位，护城河与时间自由度成倍扩张',
     fluxHudChaos: '混沌雨幕：没有流向结构的零散账单，让人根本找不到真正的价值漏斗',
 
     // Hall III
@@ -103,7 +105,7 @@ export const I18N = {
     hall4Tech: '命题四 · 均值幻象与个体尊严',
     hall4Title: '真相的棱镜',
     hall4Lead:
-      '认知必修课：用同一份一百二十位探索者的真实决策数据，在五种截然不同的视觉形态间实时变形——看“平均值”如何掩盖真实撕裂，又看“五维人文繁花”如何还原生命的完整立体。',
+      'AI 时代的认知必修课：用同一份 120 位探索者的真实决策数据，在五种截然不同的视觉形态间实时变形——看 AI 生成的“平均值”如何掩盖真实撕裂，又看“五维人文繁花”如何还原生命的完整立体。',
     plate4Label: '馆藏版画肆 · 原创数字印记',
     plate4LightTitle: '馆藏版画肆 · 《真相的棱镜》',
     prismMode0: '零 · 混沌原始点',
@@ -112,7 +114,7 @@ export const I18N = {
     prismModeC: '丙 · 自由与焦虑前沿',
     prismModeD: '丁 · 数据人文繁花',
     prismHudLabel: '悬停任意点位或花朵读取五维人生编码',
-    prismHudDefault: '当前视窗：一百二十个真实样本正在以五维几何花瓣并置呈现',
+    prismHudDefault: '当前视窗：120 个真实决策样本正在以五维几何形态并置呈现',
 
     // Hall V Sanctuary
     hall5Tag: '第五展厅 · 策展哲思与馆藏版画',
@@ -144,15 +146,15 @@ export const I18N = {
     brandIntro:
       '《万象归序》是我个人长期维护的数据可视化艺术实验场。项目源代码与开源可视化策展图谱均已公开，欢迎每一位追求极致视觉表达的探索者共同扩展更多生活与工作命题：',
     brandLi1: '<strong>在线交互殿堂</strong>：随时在浏览器中亲手推演「混沌坍缩为秩序」的动态视觉实验。',
-    brandLi2: '<strong>开源方法论附录</strong>：系统整理了世界经典数据可视化理论与六大开源几何引擎的选型边界。',
+    brandLi2: '<strong>开源方法论附录</strong>：系统整理了世界经典数据可视化理论与主流开源几何引擎的选型边界。',
     linkGithub: '访问代码仓库 ↗',
     linkProfile: 'DYCSHOW 个人主页 ↗',
     linkAtlas: '阅读中文技术图谱 ↗',
 
     footerLeft: '<strong>DYCSHOW 个人策展与设计</strong> · 万象归序：数据可视化艺术殿堂',
-    footerRight: '原创视觉与代码版权归属 DYCSHOW · 献给人工智能时代的人类视觉素养',
+    footerRight: '原创视觉与代码版权归属 DYCSHOW · 献给 AI 时代的人类视觉素养',
     sealText: '© DYCSHOW 馆藏原件',
-    toastMsg: '馆藏版权保护：© DYCSHOW 《万象归序》原创艺术版画与动态视觉模型受 provenance 印记保护，禁止直接右键保存或拖拽带走',
+    toastMsg: '馆藏版权保护：© DYCSHOW 《万象归序》原创艺术版画与动态视觉模型均受原创数字印记保护，禁止直接右键保存或拖拽带走。',
   },
 
   en: {
@@ -171,19 +173,21 @@ export const I18N = {
 
     heroMetaLeft: 'CURATED BY DYCSHOW',
     heroMetaRight: 'AESTHETICS OF VISUAL ORDER',
-    heroTitleMain: 'THE PANTHEON',
-    heroTitleSub: 'Of Mathematical Order',
+    heroTitleMain: 'THE PANTHEON OF ORDER',
+    heroTitleSub: 'Museum of Data Visualization Art',
     heroSubtitle:
-      'In an era where algorithms generate endless charts in three seconds, the rarest human capability is no longer computation—it is the visual literacy to discern structure, truth, and elegance beneath a chaotic world.',
+      'In an era where AI generates endless charts in three seconds, the rarest human capability is no longer tooling—it is the visual literacy to discern structure, order, and truth beneath a chaotic world.',
     shapeChaos: '01 · Raw Nebula',
-    shapeAstrolabe: '02 · Astrolabe',
-    shapePhyllotaxis: '03 · Phyllotaxis',
+    shapeAstrolabe: '02 · Celestial Astrolabe',
+    shapePhyllotaxis: '03 · Fibonacci Phyllotaxis',
     shapeHarmonic: '04 · Harmonic Matrix',
+    stat1Num: '04',
     stat1Label: 'Interactive Halls',
     stat1Sub: 'Entropy-to-Cosmos Physics',
+    stat2Num: '03',
     stat2Label: 'Laws of Order',
     stat2Sub: 'Craft Over Templates',
-    stat3Num: '04 Plates',
+    stat3Num: '04',
     stat3Label: 'Archival Plates',
     stat3Sub: 'Obsidian & Gold Foil',
     enterMuseum: 'Enter Hall I ↓',
@@ -239,8 +243,8 @@ export const I18N = {
     interventionOn: '✦ Cognitive Intervention Active · Restore Baseline',
     fluxHudLabel: 'Hover Any Structural Pillar to Isolate Upstream & Downstream Links',
     fluxHudBaseline: 'Baseline Flow: activate Cognitive Intervention above to see hidden dissipation reroute into durable moats.',
-    fluxHudAwakened: 'Intervention Active: entropy loss drops sharply while compounding craft and time sovereignty expand.',
-    fluxHudChaos: 'Uncharted Rainstorm: disconnected receipts and hours fall without topological structure or causal accountability.',
+    fluxHudAwakened: 'Intervention Active: entropy loss drops from 68u to 20u while durable moats and time sovereignty double.',
+    fluxHudChaos: 'Uncharted Rainstorm: fragmented expenses and hours fall aimlessly without causal conservation.',
 
     // Hall III
     hall3Tag: 'HALL III // ARCHIVAL PLATE 03',
@@ -258,7 +262,7 @@ export const I18N = {
     hall4Tech: 'Proposition IV · The Illusion of Averages & Human Dignity',
     hall4Title: 'The Prism of Truth',
     hall4Lead:
-      'Essential visual literacy for the AI age: watch one cohort of 120 real decision specimens morph seamlessly across five encodings—revealing how summary bars fabricate fairness while five-petal botanical glyphs restore individual dignity.',
+      'Essential visual literacy for the AI era: watch one cohort of 120 real decision specimens morph seamlessly across five encodings—revealing how AI-generated summary bars fabricate fairness while five-petal botanical glyphs restore individual dignity.',
     plate4Label: 'ARCHIVAL PLATE IV · SIGNED EDITION',
     plate4LightTitle: 'Archival Plate IV · The Prism of Truth',
     prismMode0: '0 · Raw Scatter',
@@ -267,7 +271,7 @@ export const I18N = {
     prismModeC: 'C · Freedom vs Anxiety',
     prismModeD: 'D · Botanical Glyphs',
     prismHudLabel: 'Hover Any Specimen or Blossom to Inspect 5D Life Coordinates',
-    prismHudDefault: 'Active Viewport: 120 human decision specimens rendered simultaneously as five-petal geometric blossoms.',
+    prismHudDefault: 'Active Viewport: 120 human decision specimens mapped across five-dimensional visual encodings.',
 
     // Hall V Sanctuary
     hall5Tag: 'HALL V // CURATORIAL PHILOSOPHY & ARCHIVAL PLATES',
@@ -299,7 +303,7 @@ export const I18N = {
     brandIntro:
       'The Pantheon of Order is an ongoing personal laboratory for data visualization art. Source code and curatorial methodology atlases are published openly for fellow explorers seeking elevated visual craft:',
     brandLi1: '<strong>Interactive Sanctuary</strong>: Witness real-time physical transitions from raw entropy to mathematical cosmos.',
-    brandLi2: '<strong>Methodological Atlas</strong>: Systematic taxonomy pairing classic visual theory with modern open-source engines.',
+    brandLi2: '<strong>Methodological Atlas</strong>: Systematic taxonomy pairing classic visual theory with mainstream open-source geometric engines.',
     linkGithub: 'Inspect Repository ↗',
     linkProfile: 'DYCSHOW Profile ↗',
     linkAtlas: 'Read Technical Atlas ↗',

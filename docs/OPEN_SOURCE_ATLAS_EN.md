@@ -5,7 +5,7 @@
 # Open-Source Data Visualization Methodological Atlas
 
 > **Core Thesis**  
-> In an era when AI can generate charts and tables in seconds, the scarcest human capability is **visual literacy**—the power to perceive structural order beneath noisy reality, choose honest encodings, and translate open-source geometric engines into genuine human insight.
+> In an era where AI generates endless charts in three seconds, the scarcest human capability is **visual literacy**—the power to perceive structural order beneath noisy reality, choose honest encodings, and translate open-source geometric engines into genuine human insight.
 
 ---
 
