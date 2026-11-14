@@ -1,0 +1,18 @@
+{
+  "name": "pantheon-of-data-art",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "《万象归序 · The Pantheon of Order》— A Personal Data Visualization Art Museum curated by DYCSHOW",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "d3": "^7.9.0"
+  },
+  "devDependencies": {
+    "vite": "^6.0.11"
+  }
+}
