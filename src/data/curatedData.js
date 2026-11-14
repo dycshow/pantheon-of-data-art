@@ -605,12 +605,12 @@ export const PRISM_STAGE_ESSAYS = {
   bar: {
     zh: {
       title: '视角甲 · 平均值的谎言',
-      desc: '柱状图冷冰冰地告诉你：四类赛道的「综合均值」几乎都在 50 至 65 分之间相差无几！这是 AI 生成图表最常制造的盲区——它抹平了一切极端代价与内部分化。',
+      desc: '柱状图冷冰冰地将五维人生压缩为单一柱体：「传统高压赛道」（均值 43.9）与「惯性舒适区」（均值 44.7）看似毫无差别，「独立数字工匠」也仅剩一个光滑的 76.6 分。这是 AI 生成汇总图表最常制造的盲区——它彻底抹平了高薪背后的极端焦虑代价与群体内部的双峰撕裂。',
       lesson: '只要看见只给平均值的柱状图，请立刻追问：它的方差、双峰分化与尾部代价是什么？',
     },
     en: {
       title: 'View A · The Lie of Averages',
-      desc: 'Cold summary bars claim all four life tracks share virtually identical composite averages (50–65). AI-generated summary charts love this illusion—erasing hidden divergence and anxiety cost.',
+      desc: 'Summary bars flatten five dimensions of human life into a single number: High-Burn Track (mean 43.9) and Steady Drift (mean 44.7) look nearly indistinguishable, while Indie Craftsperson is reduced to a smooth 76.6. AI-generated summary charts love this illusion—erasing extreme burnout trade-offs and internal bimodal splits.',
       lesson: 'Whenever you are handed a standalone average bar, ask immediately for variance, bimodality, and hidden trade-offs.',
     },
   },
